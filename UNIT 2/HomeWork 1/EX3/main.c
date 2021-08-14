@@ -5,12 +5,17 @@
  *      Author: hazem
  */
 
-#include "stdio.h"
 
-void main()
+#include <stdio.h>
+
+int main()
 {
-	printf("hello \n");
-	/*for(int x ; ;); */
+	int input1 , input2;
+	printf("Enter two integers: ");
+	fflush(stdin); fflush(stdout);
+	scanf("%d %d",&input1,&input2);
+	printf("\nSum: %d",input1 + input2);
+	return 0;
 }
 
 

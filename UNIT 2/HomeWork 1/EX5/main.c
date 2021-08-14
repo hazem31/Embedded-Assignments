@@ -5,12 +5,17 @@
  *      Author: hazem
  */
 
-#include "stdio.h"
 
-void main()
+#include <stdio.h>
+
+int main()
 {
-	printf("hello \n");
-	/*for(int x ; ;); */
+	char input;
+	printf("Enter a character: ");
+	fflush(stdin); fflush(stdout);
+	scanf("%c",&input);
+	printf("ASCII value of %c = %d",input,input);
+	return 0;
 }
 
 

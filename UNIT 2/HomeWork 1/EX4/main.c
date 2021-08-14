@@ -5,12 +5,17 @@
  *      Author: hazem
  */
 
-#include "stdio.h"
 
-void main()
+#include <stdio.h>
+
+int main()
 {
-	printf("hello \n");
-	/*for(int x ; ;); */
+	float input1 , input2;
+	printf("Enter two numbers: ");
+	fflush(stdin); fflush(stdout);
+	scanf("%f %f",&input1,&input2);
+	printf("\nProduct: %f",input1 * input2);
+	return 0;
 }
 
 

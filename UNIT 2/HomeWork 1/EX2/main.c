@@ -5,12 +5,17 @@
  *      Author: hazem
  */
 
-#include "stdio.h"
 
-void main()
+#include <stdio.h>
+
+int main()
 {
-	printf("hello \n");
-	/*for(int x ; ;); */
+	int input;
+	printf("Enter an integer: ")
+	fflush(stdin); fflush(stdout);
+	scanf("%d",&input);
+	printf("You Entered: %d",input);
+	return 0;
 }
 
 

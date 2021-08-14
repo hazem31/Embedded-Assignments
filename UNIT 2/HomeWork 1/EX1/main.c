@@ -5,12 +5,14 @@
  *      Author: hazem
  */
 
-#include "stdio.h"
 
-void main()
+#include <stdio.h>
+
+int main()
 {
-	printf("hello \n");
-	/*for(int x ; ;); */
+
+	printf("C Programming\n");
+	return 0;
 }
 
 
