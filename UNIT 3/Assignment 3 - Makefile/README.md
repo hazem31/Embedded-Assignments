@@ -14,4 +14,4 @@ create a [SW](./Code/main.c) to toggle a LED using board STM32F103CX while autom
 
 ## Simulation
 
-![animation](./Animation.GIF)
+![animation](./Animation.gif)
