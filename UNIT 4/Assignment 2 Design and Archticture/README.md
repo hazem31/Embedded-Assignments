@@ -30,6 +30,23 @@ is to learn about diffrient diagrams and methods to represent the apllication in
 
 ![DC_states](./DC_states.png)
 
-### the sequence diagram of the operation 
+### the operation simulation 
 
 ![states](./simulationtrace_fromttool.png)
+
+
+### Requirements Diagram
+
+![req](./req_diagram.png)
+
+### Use Case Diagram
+
+![use](./case_diagram.png)
+
+### Activity Diagram
+
+![act](./activity_diagram.png)
+
+### Sequence Diagram
+
+![seq](./seq_diagram.png)
