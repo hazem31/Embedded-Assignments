@@ -8,4 +8,4 @@ Configure Board to run with the Following rates:
 <br> SysClk 8 MHZ
 <br> Use only internal HSI_RC
 
-![gif](./Animation6.gif)
+![gif](./Capture.png)
