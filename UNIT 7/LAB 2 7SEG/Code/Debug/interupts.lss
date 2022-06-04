@@ -1,0 +1,224 @@
+
+interupts.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000156  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .stab         00000240  00000000  00000000  000001ac  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  2 .stabstr      00000279  00000000  00000000  000003ec  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 63 00 	call	0xc6	; 0xc6 <main>
+  64:	0c 94 a9 00 	jmp	0x152	; 0x152 <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <wait_ms>:
+#define RESET_BIT(ADDRESS,BIT) (ADDRESS &= (~(1<<BIT)))
+#define TOGGLE_BIT(ADDRESS,BIT) (ADDRESS ^= (1<<BIT))
+#define READ_BIT(ADDRESS,BIT) ( ( ADDRESS & (1<<BIT) )>>BIT) )
+
+void wait_ms(unsigned char time)
+{
+  6c:	df 93       	push	r29
+  6e:	cf 93       	push	r28
+  70:	00 d0       	rcall	.+0      	; 0x72 <wait_ms+0x6>
+  72:	00 d0       	rcall	.+0      	; 0x74 <wait_ms+0x8>
+  74:	0f 92       	push	r0
+  76:	cd b7       	in	r28, 0x3d	; 61
+  78:	de b7       	in	r29, 0x3e	; 62
+  7a:	8d 83       	std	Y+5, r24	; 0x05
+	unsigned int i , j;
+	for(i = 0 ; i < time ; i++)
+  7c:	1c 82       	std	Y+4, r1	; 0x04
+  7e:	1b 82       	std	Y+3, r1	; 0x03
+  80:	12 c0       	rjmp	.+36     	; 0xa6 <wait_ms+0x3a>
+		for(j = 0 ; j < 100 ; j++);
+  82:	1a 82       	std	Y+2, r1	; 0x02
+  84:	19 82       	std	Y+1, r1	; 0x01
+  86:	05 c0       	rjmp	.+10     	; 0x92 <wait_ms+0x26>
+  88:	89 81       	ldd	r24, Y+1	; 0x01
+  8a:	9a 81       	ldd	r25, Y+2	; 0x02
+  8c:	01 96       	adiw	r24, 0x01	; 1
+  8e:	9a 83       	std	Y+2, r25	; 0x02
+  90:	89 83       	std	Y+1, r24	; 0x01
+  92:	89 81       	ldd	r24, Y+1	; 0x01
+  94:	9a 81       	ldd	r25, Y+2	; 0x02
+  96:	84 36       	cpi	r24, 0x64	; 100
+  98:	91 05       	cpc	r25, r1
+  9a:	b0 f3       	brcs	.-20     	; 0x88 <wait_ms+0x1c>
+#define READ_BIT(ADDRESS,BIT) ( ( ADDRESS & (1<<BIT) )>>BIT) )
+
+void wait_ms(unsigned char time)
+{
+	unsigned int i , j;
+	for(i = 0 ; i < time ; i++)
+  9c:	8b 81       	ldd	r24, Y+3	; 0x03
+  9e:	9c 81       	ldd	r25, Y+4	; 0x04
+  a0:	01 96       	adiw	r24, 0x01	; 1
+  a2:	9c 83       	std	Y+4, r25	; 0x04
+  a4:	8b 83       	std	Y+3, r24	; 0x03
+  a6:	8d 81       	ldd	r24, Y+5	; 0x05
+  a8:	28 2f       	mov	r18, r24
+  aa:	30 e0       	ldi	r19, 0x00	; 0
+  ac:	8b 81       	ldd	r24, Y+3	; 0x03
+  ae:	9c 81       	ldd	r25, Y+4	; 0x04
+  b0:	82 17       	cp	r24, r18
+  b2:	93 07       	cpc	r25, r19
+  b4:	30 f3       	brcs	.-52     	; 0x82 <wait_ms+0x16>
+		for(j = 0 ; j < 100 ; j++);
+}
+  b6:	0f 90       	pop	r0
+  b8:	0f 90       	pop	r0
+  ba:	0f 90       	pop	r0
+  bc:	0f 90       	pop	r0
+  be:	0f 90       	pop	r0
+  c0:	cf 91       	pop	r28
+  c2:	df 91       	pop	r29
+  c4:	08 95       	ret
+
+000000c6 <main>:
+
+int main()
+{
+  c6:	df 93       	push	r29
+  c8:	cf 93       	push	r28
+  ca:	00 d0       	rcall	.+0      	; 0xcc <main+0x6>
+  cc:	0f 92       	push	r0
+  ce:	cd b7       	in	r28, 0x3d	; 61
+  d0:	de b7       	in	r29, 0x3e	; 62
+	unsigned char i,j,k;
+	DDRC |= 0b11111100;
+  d2:	a4 e3       	ldi	r26, 0x34	; 52
+  d4:	b0 e0       	ldi	r27, 0x00	; 0
+  d6:	e4 e3       	ldi	r30, 0x34	; 52
+  d8:	f0 e0       	ldi	r31, 0x00	; 0
+  da:	80 81       	ld	r24, Z
+  dc:	8c 6f       	ori	r24, 0xFC	; 252
+  de:	8c 93       	st	X, r24
+	while(1)
+	{
+		for(i = 0 ; i < 10 ; i++)
+  e0:	1b 82       	std	Y+3, r1	; 0x03
+  e2:	33 c0       	rjmp	.+102    	; 0x14a <main+0x84>
+		{
+			for(j = 0 ; j < 10 ; j++)
+  e4:	1a 82       	std	Y+2, r1	; 0x02
+  e6:	2b c0       	rjmp	.+86     	; 0x13e <main+0x78>
+			{
+				for(k = 0 ; k < 100 ; k++)
+  e8:	19 82       	std	Y+1, r1	; 0x01
+  ea:	23 c0       	rjmp	.+70     	; 0x132 <main+0x6c>
+				{
+					PORTC = (i<<4) | (0b1000);
+  ec:	e5 e3       	ldi	r30, 0x35	; 53
+  ee:	f0 e0       	ldi	r31, 0x00	; 0
+  f0:	8b 81       	ldd	r24, Y+3	; 0x03
+  f2:	88 2f       	mov	r24, r24
+  f4:	90 e0       	ldi	r25, 0x00	; 0
+  f6:	82 95       	swap	r24
+  f8:	92 95       	swap	r25
+  fa:	90 7f       	andi	r25, 0xF0	; 240
+  fc:	98 27       	eor	r25, r24
+  fe:	80 7f       	andi	r24, 0xF0	; 240
+ 100:	98 27       	eor	r25, r24
+ 102:	88 60       	ori	r24, 0x08	; 8
+ 104:	80 83       	st	Z, r24
+					wait_ms(1);
+ 106:	81 e0       	ldi	r24, 0x01	; 1
+ 108:	0e 94 36 00 	call	0x6c	; 0x6c <wait_ms>
+					PORTC = (j<<4) | (0b0100);
+ 10c:	e5 e3       	ldi	r30, 0x35	; 53
+ 10e:	f0 e0       	ldi	r31, 0x00	; 0
+ 110:	8a 81       	ldd	r24, Y+2	; 0x02
+ 112:	88 2f       	mov	r24, r24
+ 114:	90 e0       	ldi	r25, 0x00	; 0
+ 116:	82 95       	swap	r24
+ 118:	92 95       	swap	r25
+ 11a:	90 7f       	andi	r25, 0xF0	; 240
+ 11c:	98 27       	eor	r25, r24
+ 11e:	80 7f       	andi	r24, 0xF0	; 240
+ 120:	98 27       	eor	r25, r24
+ 122:	84 60       	ori	r24, 0x04	; 4
+ 124:	80 83       	st	Z, r24
+					wait_ms(1);
+ 126:	81 e0       	ldi	r24, 0x01	; 1
+ 128:	0e 94 36 00 	call	0x6c	; 0x6c <wait_ms>
+	{
+		for(i = 0 ; i < 10 ; i++)
+		{
+			for(j = 0 ; j < 10 ; j++)
+			{
+				for(k = 0 ; k < 100 ; k++)
+ 12c:	89 81       	ldd	r24, Y+1	; 0x01
+ 12e:	8f 5f       	subi	r24, 0xFF	; 255
+ 130:	89 83       	std	Y+1, r24	; 0x01
+ 132:	89 81       	ldd	r24, Y+1	; 0x01
+ 134:	84 36       	cpi	r24, 0x64	; 100
+ 136:	d0 f2       	brcs	.-76     	; 0xec <main+0x26>
+	DDRC |= 0b11111100;
+	while(1)
+	{
+		for(i = 0 ; i < 10 ; i++)
+		{
+			for(j = 0 ; j < 10 ; j++)
+ 138:	8a 81       	ldd	r24, Y+2	; 0x02
+ 13a:	8f 5f       	subi	r24, 0xFF	; 255
+ 13c:	8a 83       	std	Y+2, r24	; 0x02
+ 13e:	8a 81       	ldd	r24, Y+2	; 0x02
+ 140:	8a 30       	cpi	r24, 0x0A	; 10
+ 142:	90 f2       	brcs	.-92     	; 0xe8 <main+0x22>
+{
+	unsigned char i,j,k;
+	DDRC |= 0b11111100;
+	while(1)
+	{
+		for(i = 0 ; i < 10 ; i++)
+ 144:	8b 81       	ldd	r24, Y+3	; 0x03
+ 146:	8f 5f       	subi	r24, 0xFF	; 255
+ 148:	8b 83       	std	Y+3, r24	; 0x03
+ 14a:	8b 81       	ldd	r24, Y+3	; 0x03
+ 14c:	8a 30       	cpi	r24, 0x0A	; 10
+ 14e:	50 f2       	brcs	.-108    	; 0xe4 <main+0x1e>
+ 150:	c7 cf       	rjmp	.-114    	; 0xe0 <main+0x1a>
+
+00000152 <_exit>:
+ 152:	f8 94       	cli
+
+00000154 <__stop_program>:
+ 154:	ff cf       	rjmp	.-2      	; 0x154 <__stop_program>

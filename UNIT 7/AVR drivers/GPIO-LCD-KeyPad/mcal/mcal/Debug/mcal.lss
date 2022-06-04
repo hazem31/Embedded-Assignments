@@ -1,0 +1,987 @@
+
+mcal.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000588  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000008  00800060  00000588  000005fc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  00000604  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000634  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000118  00000000  00000000  00000670  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00001712  00000000  00000000  00000788  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000095c  00000000  00000000  00001e9a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000b06  00000000  00000000  000027f6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000264  00000000  00000000  000032fc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000561  00000000  00000000  00003560  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000006a9  00000000  00000000  00003ac1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000d8  00000000  00000000  0000416a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e8 e8       	ldi	r30, 0x88	; 136
+  68:	f5 e0       	ldi	r31, 0x05	; 5
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a8 36       	cpi	r26, 0x68	; 104
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 9d 02 	call	0x53a	; 0x53a <main>
+  7a:	0c 94 c2 02 	jmp	0x584	; 0x584 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <MCAL_GPIO_Init>:
+		return GPIO_PIN_RESET;
+}
+uint8_t MCAL_GPIO_ReadPort (GPIO_TypeDef *GPIOx)
+{
+	return GPIOx->PIN;
+}
+  82:	fc 01       	movw	r30, r24
+  84:	db 01       	movw	r26, r22
+  86:	11 96       	adiw	r26, 0x01	; 1
+  88:	9c 91       	ld	r25, X
+  8a:	11 97       	sbiw	r26, 0x01	; 1
+  8c:	91 30       	cpi	r25, 0x01	; 1
+  8e:	59 f4       	brne	.+22     	; 0xa6 <MCAL_GPIO_Init+0x24>
+  90:	91 81       	ldd	r25, Z+1	; 0x01
+  92:	8c 91       	ld	r24, X
+  94:	80 95       	com	r24
+  96:	89 23       	and	r24, r25
+  98:	81 83       	std	Z+1, r24	; 0x01
+  9a:	92 81       	ldd	r25, Z+2	; 0x02
+  9c:	8c 91       	ld	r24, X
+  9e:	80 95       	com	r24
+  a0:	89 23       	and	r24, r25
+  a2:	82 83       	std	Z+2, r24	; 0x02
+  a4:	08 95       	ret
+  a6:	92 30       	cpi	r25, 0x02	; 2
+  a8:	59 f4       	brne	.+22     	; 0xc0 <MCAL_GPIO_Init+0x3e>
+  aa:	91 81       	ldd	r25, Z+1	; 0x01
+  ac:	db 01       	movw	r26, r22
+  ae:	8c 91       	ld	r24, X
+  b0:	80 95       	com	r24
+  b2:	89 23       	and	r24, r25
+  b4:	81 83       	std	Z+1, r24	; 0x01
+  b6:	92 81       	ldd	r25, Z+2	; 0x02
+  b8:	8c 91       	ld	r24, X
+  ba:	89 2b       	or	r24, r25
+  bc:	82 83       	std	Z+2, r24	; 0x02
+  be:	08 95       	ret
+  c0:	93 30       	cpi	r25, 0x03	; 3
+  c2:	29 f4       	brne	.+10     	; 0xce <MCAL_GPIO_Init+0x4c>
+  c4:	91 81       	ldd	r25, Z+1	; 0x01
+  c6:	db 01       	movw	r26, r22
+  c8:	8c 91       	ld	r24, X
+  ca:	89 2b       	or	r24, r25
+  cc:	81 83       	std	Z+1, r24	; 0x01
+  ce:	08 95       	ret
+
+000000d0 <MCAL_GPIO_ReadPin>:
+  d0:	fc 01       	movw	r30, r24
+  d2:	80 81       	ld	r24, Z
+  d4:	86 23       	and	r24, r22
+  d6:	09 f0       	breq	.+2      	; 0xda <MCAL_GPIO_ReadPin+0xa>
+  d8:	81 e0       	ldi	r24, 0x01	; 1
+  da:	08 95       	ret
+
+000000dc <MCAL_GPIO_WritePin>:
+
+void MCAL_GPIO_WritePin (GPIO_TypeDef *GPIOx,uint8_t PinNumber , uint8_t Value)
+{
+  dc:	fc 01       	movw	r30, r24
+	if (Value == GPIO_PIN_SET)
+  de:	41 30       	cpi	r20, 0x01	; 1
+  e0:	21 f4       	brne	.+8      	; 0xea <MCAL_GPIO_WritePin+0xe>
+	{
+		GPIOx->PORT |= PinNumber;
+  e2:	82 81       	ldd	r24, Z+2	; 0x02
+  e4:	68 2b       	or	r22, r24
+  e6:	62 83       	std	Z+2, r22	; 0x02
+  e8:	08 95       	ret
+	}
+	else
+	{
+		GPIOx->PORT &= ~(PinNumber);
+  ea:	92 81       	ldd	r25, Z+2	; 0x02
+  ec:	60 95       	com	r22
+  ee:	69 23       	and	r22, r25
+  f0:	62 83       	std	Z+2, r22	; 0x02
+  f2:	08 95       	ret
+
+000000f4 <MCAL_GPIO_WritePort>:
+	}
+	
+}
+void MCAL_GPIO_WritePort (GPIO_TypeDef *GPIOx , uint8_t Value)
+{
+	GPIOx->PORT = Value;
+  f4:	fc 01       	movw	r30, r24
+  f6:	62 83       	std	Z+2, r22	; 0x02
+  f8:	08 95       	ret
+
+000000fa <MCAL_GPIO_TogglePin>:
+}
+
+void MCAL_GPIO_TogglePin (GPIO_TypeDef *GPIOx,uint8_t PinNumber )
+{
+	GPIOx->PORT ^= PinNumber;
+  fa:	fc 01       	movw	r30, r24
+  fc:	22 81       	ldd	r18, Z+2	; 0x02
+  fe:	62 27       	eor	r22, r18
+ 100:	62 83       	std	Z+2, r22	; 0x02
+ 102:	08 95       	ret
+
+00000104 <HCAL_Keypad_init>:
+
+uint8_t rows[] = {R0,R1,R2,R3};
+uint8_t cols[] = {C0,C1,C2,C3};
+
+void HCAL_Keypad_init()
+{
+ 104:	1f 93       	push	r17
+ 106:	cf 93       	push	r28
+ 108:	df 93       	push	r29
+ 10a:	00 d0       	rcall	.+0      	; 0x10c <HCAL_Keypad_init+0x8>
+ 10c:	cd b7       	in	r28, 0x3d	; 61
+ 10e:	de b7       	in	r29, 0x3e	; 62
+	GPIO_PinConfig_t PinConfig;
+	
+	PinConfig.GPIO_PinNumber = R0;
+ 110:	81 e0       	ldi	r24, 0x01	; 1
+ 112:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_INPUT_PU;
+ 114:	12 e0       	ldi	r17, 0x02	; 2
+ 116:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 118:	be 01       	movw	r22, r28
+ 11a:	6f 5f       	subi	r22, 0xFF	; 255
+ 11c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 11e:	86 e3       	ldi	r24, 0x36	; 54
+ 120:	90 e0       	ldi	r25, 0x00	; 0
+ 122:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	PinConfig.GPIO_PinNumber = R1;
+ 126:	19 83       	std	Y+1, r17	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_INPUT_PU;
+ 128:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 12a:	be 01       	movw	r22, r28
+ 12c:	6f 5f       	subi	r22, 0xFF	; 255
+ 12e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 130:	86 e3       	ldi	r24, 0x36	; 54
+ 132:	90 e0       	ldi	r25, 0x00	; 0
+ 134:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	PinConfig.GPIO_PinNumber = R2;
+ 138:	84 e0       	ldi	r24, 0x04	; 4
+ 13a:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_INPUT_PU;
+ 13c:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 13e:	be 01       	movw	r22, r28
+ 140:	6f 5f       	subi	r22, 0xFF	; 255
+ 142:	7f 4f       	sbci	r23, 0xFF	; 255
+ 144:	86 e3       	ldi	r24, 0x36	; 54
+ 146:	90 e0       	ldi	r25, 0x00	; 0
+ 148:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	PinConfig.GPIO_PinNumber = R3;
+ 14c:	88 e0       	ldi	r24, 0x08	; 8
+ 14e:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_INPUT_PU;
+ 150:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 152:	be 01       	movw	r22, r28
+ 154:	6f 5f       	subi	r22, 0xFF	; 255
+ 156:	7f 4f       	sbci	r23, 0xFF	; 255
+ 158:	86 e3       	ldi	r24, 0x36	; 54
+ 15a:	90 e0       	ldi	r25, 0x00	; 0
+ 15c:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	PinConfig.GPIO_PinNumber = C0;
+ 160:	80 e1       	ldi	r24, 0x10	; 16
+ 162:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 164:	13 e0       	ldi	r17, 0x03	; 3
+ 166:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 168:	be 01       	movw	r22, r28
+ 16a:	6f 5f       	subi	r22, 0xFF	; 255
+ 16c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 16e:	86 e3       	ldi	r24, 0x36	; 54
+ 170:	90 e0       	ldi	r25, 0x00	; 0
+ 172:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	PinConfig.GPIO_PinNumber = C1;
+ 176:	80 e2       	ldi	r24, 0x20	; 32
+ 178:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 17a:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 17c:	be 01       	movw	r22, r28
+ 17e:	6f 5f       	subi	r22, 0xFF	; 255
+ 180:	7f 4f       	sbci	r23, 0xFF	; 255
+ 182:	86 e3       	ldi	r24, 0x36	; 54
+ 184:	90 e0       	ldi	r25, 0x00	; 0
+ 186:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	PinConfig.GPIO_PinNumber = C2;
+ 18a:	80 e4       	ldi	r24, 0x40	; 64
+ 18c:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 18e:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 190:	be 01       	movw	r22, r28
+ 192:	6f 5f       	subi	r22, 0xFF	; 255
+ 194:	7f 4f       	sbci	r23, 0xFF	; 255
+ 196:	86 e3       	ldi	r24, 0x36	; 54
+ 198:	90 e0       	ldi	r25, 0x00	; 0
+ 19a:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	
+	PinConfig.GPIO_PinNumber = C3;
+ 19e:	80 e8       	ldi	r24, 0x80	; 128
+ 1a0:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 1a2:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init( KEYPAD_PORT ,&PinConfig);
+ 1a4:	be 01       	movw	r22, r28
+ 1a6:	6f 5f       	subi	r22, 0xFF	; 255
+ 1a8:	7f 4f       	sbci	r23, 0xFF	; 255
+ 1aa:	86 e3       	ldi	r24, 0x36	; 54
+ 1ac:	90 e0       	ldi	r25, 0x00	; 0
+ 1ae:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+}
+ 1b2:	0f 90       	pop	r0
+ 1b4:	0f 90       	pop	r0
+ 1b6:	df 91       	pop	r29
+ 1b8:	cf 91       	pop	r28
+ 1ba:	1f 91       	pop	r17
+ 1bc:	08 95       	ret
+
+000001be <HCAL_Keypad_getkey>:
+
+
+char HCAL_Keypad_getkey()
+{
+ 1be:	0f 93       	push	r16
+ 1c0:	1f 93       	push	r17
+ 1c2:	cf 93       	push	r28
+ 1c4:	df 93       	push	r29
+	uint8_t i , j;
+	for(i = 0 ; i < NROWS ; i++)
+ 1c6:	00 e0       	ldi	r16, 0x00	; 0
+ 1c8:	6c c0       	rjmp	.+216    	; 0x2a2 <HCAL_Keypad_getkey+0xe4>
+	{
+		
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[0],GPIO_PIN_SET);
+ 1ca:	c0 e6       	ldi	r28, 0x60	; 96
+ 1cc:	d0 e0       	ldi	r29, 0x00	; 0
+ 1ce:	41 e0       	ldi	r20, 0x01	; 1
+ 1d0:	68 81       	ld	r22, Y
+ 1d2:	86 e3       	ldi	r24, 0x36	; 54
+ 1d4:	90 e0       	ldi	r25, 0x00	; 0
+ 1d6:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[1],GPIO_PIN_SET);
+ 1da:	41 e0       	ldi	r20, 0x01	; 1
+ 1dc:	69 81       	ldd	r22, Y+1	; 0x01
+ 1de:	86 e3       	ldi	r24, 0x36	; 54
+ 1e0:	90 e0       	ldi	r25, 0x00	; 0
+ 1e2:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[2],GPIO_PIN_SET);
+ 1e6:	41 e0       	ldi	r20, 0x01	; 1
+ 1e8:	6a 81       	ldd	r22, Y+2	; 0x02
+ 1ea:	86 e3       	ldi	r24, 0x36	; 54
+ 1ec:	90 e0       	ldi	r25, 0x00	; 0
+ 1ee:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[3],GPIO_PIN_SET);
+ 1f2:	41 e0       	ldi	r20, 0x01	; 1
+ 1f4:	6b 81       	ldd	r22, Y+3	; 0x03
+ 1f6:	86 e3       	ldi	r24, 0x36	; 54
+ 1f8:	90 e0       	ldi	r25, 0x00	; 0
+ 1fa:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+		
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[i],GPIO_PIN_RESET);
+ 1fe:	e0 2f       	mov	r30, r16
+ 200:	f0 e0       	ldi	r31, 0x00	; 0
+ 202:	e0 5a       	subi	r30, 0xA0	; 160
+ 204:	ff 4f       	sbci	r31, 0xFF	; 255
+ 206:	40 e0       	ldi	r20, 0x00	; 0
+ 208:	60 81       	ld	r22, Z
+ 20a:	86 e3       	ldi	r24, 0x36	; 54
+ 20c:	90 e0       	ldi	r25, 0x00	; 0
+ 20e:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+		for (j = 0 ; j < NCOLS ; j++)
+ 212:	10 e0       	ldi	r17, 0x00	; 0
+ 214:	42 c0       	rjmp	.+132    	; 0x29a <HCAL_Keypad_getkey+0xdc>
+		{
+			if (MCAL_GPIO_ReadPin(KEYPAD_PORT,rows[j]) == GPIO_PIN_RESET)
+ 216:	c1 2f       	mov	r28, r17
+ 218:	d0 e0       	ldi	r29, 0x00	; 0
+ 21a:	fe 01       	movw	r30, r28
+ 21c:	ec 59       	subi	r30, 0x9C	; 156
+ 21e:	ff 4f       	sbci	r31, 0xFF	; 255
+ 220:	60 81       	ld	r22, Z
+ 222:	86 e3       	ldi	r24, 0x36	; 54
+ 224:	90 e0       	ldi	r25, 0x00	; 0
+ 226:	0e 94 68 00 	call	0xd0	; 0xd0 <MCAL_GPIO_ReadPin>
+ 22a:	81 11       	cpse	r24, r1
+ 22c:	35 c0       	rjmp	.+106    	; 0x298 <HCAL_Keypad_getkey+0xda>
+			{
+				while(MCAL_GPIO_ReadPin(KEYPAD_PORT,rows[j]) == GPIO_PIN_RESET);
+ 22e:	fe 01       	movw	r30, r28
+ 230:	ec 59       	subi	r30, 0x9C	; 156
+ 232:	ff 4f       	sbci	r31, 0xFF	; 255
+ 234:	60 81       	ld	r22, Z
+ 236:	86 e3       	ldi	r24, 0x36	; 54
+ 238:	90 e0       	ldi	r25, 0x00	; 0
+ 23a:	0e 94 68 00 	call	0xd0	; 0xd0 <MCAL_GPIO_ReadPin>
+ 23e:	88 23       	and	r24, r24
+ 240:	b1 f3       	breq	.-20     	; 0x22e <HCAL_Keypad_getkey+0x70>
+				switch (i) {
+ 242:	01 30       	cpi	r16, 0x01	; 1
+ 244:	79 f0       	breq	.+30     	; 0x264 <HCAL_Keypad_getkey+0xa6>
+ 246:	28 f0       	brcs	.+10     	; 0x252 <HCAL_Keypad_getkey+0x94>
+ 248:	02 30       	cpi	r16, 0x02	; 2
+ 24a:	a9 f0       	breq	.+42     	; 0x276 <HCAL_Keypad_getkey+0xb8>
+ 24c:	03 30       	cpi	r16, 0x03	; 3
+ 24e:	e1 f0       	breq	.+56     	; 0x288 <HCAL_Keypad_getkey+0xca>
+ 250:	23 c0       	rjmp	.+70     	; 0x298 <HCAL_Keypad_getkey+0xda>
+					case (0):
+					if (j == 0)
+ 252:	11 23       	and	r17, r17
+ 254:	59 f1       	breq	.+86     	; 0x2ac <HCAL_Keypad_getkey+0xee>
+					return '7';
+					else if (j == 1)
+ 256:	11 30       	cpi	r17, 0x01	; 1
+ 258:	59 f1       	breq	.+86     	; 0x2b0 <HCAL_Keypad_getkey+0xf2>
+					return '4';
+					else if (j == 2)
+ 25a:	12 30       	cpi	r17, 0x02	; 2
+ 25c:	59 f1       	breq	.+86     	; 0x2b4 <HCAL_Keypad_getkey+0xf6>
+					return '1';
+					else if (j == 3)
+ 25e:	13 30       	cpi	r17, 0x03	; 3
+ 260:	d9 f4       	brne	.+54     	; 0x298 <HCAL_Keypad_getkey+0xda>
+ 262:	2a c0       	rjmp	.+84     	; 0x2b8 <HCAL_Keypad_getkey+0xfa>
+					return '?';
+					break;
+					case (1):
+					if (j == 0)
+ 264:	11 23       	and	r17, r17
+ 266:	51 f1       	breq	.+84     	; 0x2bc <HCAL_Keypad_getkey+0xfe>
+					return '8';
+					else if (j == 1)
+ 268:	11 30       	cpi	r17, 0x01	; 1
+ 26a:	51 f1       	breq	.+84     	; 0x2c0 <HCAL_Keypad_getkey+0x102>
+					return '5';
+					else if (j == 2)
+ 26c:	12 30       	cpi	r17, 0x02	; 2
+ 26e:	51 f1       	breq	.+84     	; 0x2c4 <HCAL_Keypad_getkey+0x106>
+					return '2';
+					else if (j == 3)
+ 270:	13 30       	cpi	r17, 0x03	; 3
+ 272:	91 f4       	brne	.+36     	; 0x298 <HCAL_Keypad_getkey+0xda>
+ 274:	29 c0       	rjmp	.+82     	; 0x2c8 <HCAL_Keypad_getkey+0x10a>
+					return '0';
+					break;
+					case (2):
+					if (j == 0)
+ 276:	11 23       	and	r17, r17
+ 278:	49 f1       	breq	.+82     	; 0x2cc <HCAL_Keypad_getkey+0x10e>
+					return '9';
+					else if (j == 1)
+ 27a:	11 30       	cpi	r17, 0x01	; 1
+ 27c:	49 f1       	breq	.+82     	; 0x2d0 <HCAL_Keypad_getkey+0x112>
+					return '6';
+					else if (j == 2)
+ 27e:	12 30       	cpi	r17, 0x02	; 2
+ 280:	49 f1       	breq	.+82     	; 0x2d4 <HCAL_Keypad_getkey+0x116>
+					return '3';
+					else if (j == 3)
+ 282:	13 30       	cpi	r17, 0x03	; 3
+ 284:	49 f4       	brne	.+18     	; 0x298 <HCAL_Keypad_getkey+0xda>
+ 286:	28 c0       	rjmp	.+80     	; 0x2d8 <HCAL_Keypad_getkey+0x11a>
+					return '=';
+					break;
+					case (3):
+					if (j == 0)
+ 288:	11 23       	and	r17, r17
+ 28a:	41 f1       	breq	.+80     	; 0x2dc <HCAL_Keypad_getkey+0x11e>
+					return '/';
+					else if (j == 1)
+ 28c:	11 30       	cpi	r17, 0x01	; 1
+ 28e:	41 f1       	breq	.+80     	; 0x2e0 <HCAL_Keypad_getkey+0x122>
+					return '*';
+					else if (j == 2)
+ 290:	12 30       	cpi	r17, 0x02	; 2
+ 292:	41 f1       	breq	.+80     	; 0x2e4 <HCAL_Keypad_getkey+0x126>
+					return '-';
+					else if (j == 3)
+ 294:	13 30       	cpi	r17, 0x03	; 3
+ 296:	41 f1       	breq	.+80     	; 0x2e8 <HCAL_Keypad_getkey+0x12a>
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[1],GPIO_PIN_SET);
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[2],GPIO_PIN_SET);
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[3],GPIO_PIN_SET);
+		
+		MCAL_GPIO_WritePin(KEYPAD_PORT,cols[i],GPIO_PIN_RESET);
+		for (j = 0 ; j < NCOLS ; j++)
+ 298:	1f 5f       	subi	r17, 0xFF	; 255
+ 29a:	14 30       	cpi	r17, 0x04	; 4
+ 29c:	08 f4       	brcc	.+2      	; 0x2a0 <HCAL_Keypad_getkey+0xe2>
+ 29e:	bb cf       	rjmp	.-138    	; 0x216 <HCAL_Keypad_getkey+0x58>
+
+
+char HCAL_Keypad_getkey()
+{
+	uint8_t i , j;
+	for(i = 0 ; i < NROWS ; i++)
+ 2a0:	0f 5f       	subi	r16, 0xFF	; 255
+ 2a2:	04 30       	cpi	r16, 0x04	; 4
+ 2a4:	08 f4       	brcc	.+2      	; 0x2a8 <HCAL_Keypad_getkey+0xea>
+ 2a6:	91 cf       	rjmp	.-222    	; 0x1ca <HCAL_Keypad_getkey+0xc>
+
+			}
+		}
+	}
+	
+	return 'A';
+ 2a8:	81 e4       	ldi	r24, 0x41	; 65
+ 2aa:	1f c0       	rjmp	.+62     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+			{
+				while(MCAL_GPIO_ReadPin(KEYPAD_PORT,rows[j]) == GPIO_PIN_RESET);
+				switch (i) {
+					case (0):
+					if (j == 0)
+					return '7';
+ 2ac:	87 e3       	ldi	r24, 0x37	; 55
+ 2ae:	1d c0       	rjmp	.+58     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 1)
+					return '4';
+ 2b0:	84 e3       	ldi	r24, 0x34	; 52
+ 2b2:	1b c0       	rjmp	.+54     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 2)
+					return '1';
+ 2b4:	81 e3       	ldi	r24, 0x31	; 49
+ 2b6:	19 c0       	rjmp	.+50     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 3)
+					return '?';
+ 2b8:	8f e3       	ldi	r24, 0x3F	; 63
+ 2ba:	17 c0       	rjmp	.+46     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					break;
+					case (1):
+					if (j == 0)
+					return '8';
+ 2bc:	88 e3       	ldi	r24, 0x38	; 56
+ 2be:	15 c0       	rjmp	.+42     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 1)
+					return '5';
+ 2c0:	85 e3       	ldi	r24, 0x35	; 53
+ 2c2:	13 c0       	rjmp	.+38     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 2)
+					return '2';
+ 2c4:	82 e3       	ldi	r24, 0x32	; 50
+ 2c6:	11 c0       	rjmp	.+34     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 3)
+					return '0';
+ 2c8:	80 e3       	ldi	r24, 0x30	; 48
+ 2ca:	0f c0       	rjmp	.+30     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					break;
+					case (2):
+					if (j == 0)
+					return '9';
+ 2cc:	89 e3       	ldi	r24, 0x39	; 57
+ 2ce:	0d c0       	rjmp	.+26     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 1)
+					return '6';
+ 2d0:	86 e3       	ldi	r24, 0x36	; 54
+ 2d2:	0b c0       	rjmp	.+22     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 2)
+					return '3';
+ 2d4:	83 e3       	ldi	r24, 0x33	; 51
+ 2d6:	09 c0       	rjmp	.+18     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 3)
+					return '=';
+ 2d8:	8d e3       	ldi	r24, 0x3D	; 61
+ 2da:	07 c0       	rjmp	.+14     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					break;
+					case (3):
+					if (j == 0)
+					return '/';
+ 2dc:	8f e2       	ldi	r24, 0x2F	; 47
+ 2de:	05 c0       	rjmp	.+10     	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 1)
+					return '*';
+ 2e0:	8a e2       	ldi	r24, 0x2A	; 42
+ 2e2:	03 c0       	rjmp	.+6      	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 2)
+					return '-';
+ 2e4:	8d e2       	ldi	r24, 0x2D	; 45
+ 2e6:	01 c0       	rjmp	.+2      	; 0x2ea <HCAL_Keypad_getkey+0x12c>
+					else if (j == 3)
+					return '+';
+ 2e8:	8b e2       	ldi	r24, 0x2B	; 43
+			}
+		}
+	}
+	
+	return 'A';
+}
+ 2ea:	df 91       	pop	r29
+ 2ec:	cf 91       	pop	r28
+ 2ee:	1f 91       	pop	r17
+ 2f0:	0f 91       	pop	r16
+ 2f2:	08 95       	ret
+
+000002f4 <Make_Pins_Output>:
+	
+	MCAL_GPIO_WritePin(LCD_CTRL, RW_SWITCH, GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(LCD_CTRL, RS_SWITCH, GPIO_PIN_RESET);
+	HCAL_LCD_lcd_kick();
+	Make_Pins_Output();
+	MCAL_GPIO_TogglePin(GPIOA,GPIO_PIN_0);
+ 2f4:	1f 93       	push	r17
+ 2f6:	cf 93       	push	r28
+ 2f8:	df 93       	push	r29
+ 2fa:	00 d0       	rcall	.+0      	; 0x2fc <Make_Pins_Output+0x8>
+ 2fc:	cd b7       	in	r28, 0x3d	; 61
+ 2fe:	de b7       	in	r29, 0x3e	; 62
+ 300:	81 e0       	ldi	r24, 0x01	; 1
+ 302:	89 83       	std	Y+1, r24	; 0x01
+ 304:	13 e0       	ldi	r17, 0x03	; 3
+ 306:	1a 83       	std	Y+2, r17	; 0x02
+ 308:	be 01       	movw	r22, r28
+ 30a:	6f 5f       	subi	r22, 0xFF	; 255
+ 30c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 30e:	83 e3       	ldi	r24, 0x33	; 51
+ 310:	90 e0       	ldi	r25, 0x00	; 0
+ 312:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 316:	82 e0       	ldi	r24, 0x02	; 2
+ 318:	89 83       	std	Y+1, r24	; 0x01
+ 31a:	1a 83       	std	Y+2, r17	; 0x02
+ 31c:	be 01       	movw	r22, r28
+ 31e:	6f 5f       	subi	r22, 0xFF	; 255
+ 320:	7f 4f       	sbci	r23, 0xFF	; 255
+ 322:	83 e3       	ldi	r24, 0x33	; 51
+ 324:	90 e0       	ldi	r25, 0x00	; 0
+ 326:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 32a:	84 e0       	ldi	r24, 0x04	; 4
+ 32c:	89 83       	std	Y+1, r24	; 0x01
+ 32e:	1a 83       	std	Y+2, r17	; 0x02
+ 330:	be 01       	movw	r22, r28
+ 332:	6f 5f       	subi	r22, 0xFF	; 255
+ 334:	7f 4f       	sbci	r23, 0xFF	; 255
+ 336:	83 e3       	ldi	r24, 0x33	; 51
+ 338:	90 e0       	ldi	r25, 0x00	; 0
+ 33a:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 33e:	88 e0       	ldi	r24, 0x08	; 8
+ 340:	89 83       	std	Y+1, r24	; 0x01
+ 342:	1a 83       	std	Y+2, r17	; 0x02
+ 344:	be 01       	movw	r22, r28
+ 346:	6f 5f       	subi	r22, 0xFF	; 255
+ 348:	7f 4f       	sbci	r23, 0xFF	; 255
+ 34a:	83 e3       	ldi	r24, 0x33	; 51
+ 34c:	90 e0       	ldi	r25, 0x00	; 0
+ 34e:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 352:	80 e1       	ldi	r24, 0x10	; 16
+ 354:	89 83       	std	Y+1, r24	; 0x01
+ 356:	1a 83       	std	Y+2, r17	; 0x02
+ 358:	be 01       	movw	r22, r28
+ 35a:	6f 5f       	subi	r22, 0xFF	; 255
+ 35c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 35e:	83 e3       	ldi	r24, 0x33	; 51
+ 360:	90 e0       	ldi	r25, 0x00	; 0
+ 362:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 366:	80 e2       	ldi	r24, 0x20	; 32
+ 368:	89 83       	std	Y+1, r24	; 0x01
+ 36a:	1a 83       	std	Y+2, r17	; 0x02
+ 36c:	be 01       	movw	r22, r28
+ 36e:	6f 5f       	subi	r22, 0xFF	; 255
+ 370:	7f 4f       	sbci	r23, 0xFF	; 255
+ 372:	83 e3       	ldi	r24, 0x33	; 51
+ 374:	90 e0       	ldi	r25, 0x00	; 0
+ 376:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 37a:	80 e4       	ldi	r24, 0x40	; 64
+ 37c:	89 83       	std	Y+1, r24	; 0x01
+ 37e:	1a 83       	std	Y+2, r17	; 0x02
+ 380:	be 01       	movw	r22, r28
+ 382:	6f 5f       	subi	r22, 0xFF	; 255
+ 384:	7f 4f       	sbci	r23, 0xFF	; 255
+ 386:	83 e3       	ldi	r24, 0x33	; 51
+ 388:	90 e0       	ldi	r25, 0x00	; 0
+ 38a:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 38e:	80 e8       	ldi	r24, 0x80	; 128
+ 390:	89 83       	std	Y+1, r24	; 0x01
+ 392:	1a 83       	std	Y+2, r17	; 0x02
+ 394:	be 01       	movw	r22, r28
+ 396:	6f 5f       	subi	r22, 0xFF	; 255
+ 398:	7f 4f       	sbci	r23, 0xFF	; 255
+ 39a:	83 e3       	ldi	r24, 0x33	; 51
+ 39c:	90 e0       	ldi	r25, 0x00	; 0
+ 39e:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+ 3a2:	0f 90       	pop	r0
+ 3a4:	0f 90       	pop	r0
+ 3a6:	df 91       	pop	r29
+ 3a8:	cf 91       	pop	r28
+ 3aa:	1f 91       	pop	r17
+ 3ac:	08 95       	ret
+
+000003ae <HCAL_LCD_lcd_kick>:
+ 3ae:	40 e0       	ldi	r20, 0x00	; 0
+ 3b0:	60 e1       	ldi	r22, 0x10	; 16
+ 3b2:	89 e3       	ldi	r24, 0x39	; 57
+ 3b4:	90 e0       	ldi	r25, 0x00	; 0
+ 3b6:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 3ba:	2f e7       	ldi	r18, 0x7F	; 127
+ 3bc:	88 e3       	ldi	r24, 0x38	; 56
+ 3be:	91 e0       	ldi	r25, 0x01	; 1
+ 3c0:	21 50       	subi	r18, 0x01	; 1
+ 3c2:	80 40       	sbci	r24, 0x00	; 0
+ 3c4:	90 40       	sbci	r25, 0x00	; 0
+ 3c6:	e1 f7       	brne	.-8      	; 0x3c0 <HCAL_LCD_lcd_kick+0x12>
+ 3c8:	00 c0       	rjmp	.+0      	; 0x3ca <HCAL_LCD_lcd_kick+0x1c>
+ 3ca:	00 00       	nop
+ 3cc:	41 e0       	ldi	r20, 0x01	; 1
+ 3ce:	60 e1       	ldi	r22, 0x10	; 16
+ 3d0:	89 e3       	ldi	r24, 0x39	; 57
+ 3d2:	90 e0       	ldi	r25, 0x00	; 0
+ 3d4:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 3d8:	08 95       	ret
+
+000003da <HCAL_LCD_WRITE_COMMAND>:
+ 3da:	68 2f       	mov	r22, r24
+ 3dc:	83 e3       	ldi	r24, 0x33	; 51
+ 3de:	90 e0       	ldi	r25, 0x00	; 0
+ 3e0:	0e 94 7a 00 	call	0xf4	; 0xf4 <MCAL_GPIO_WritePort>
+ 3e4:	40 e0       	ldi	r20, 0x00	; 0
+ 3e6:	68 e0       	ldi	r22, 0x08	; 8
+ 3e8:	89 e3       	ldi	r24, 0x39	; 57
+ 3ea:	90 e0       	ldi	r25, 0x00	; 0
+ 3ec:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 3f0:	40 e0       	ldi	r20, 0x00	; 0
+ 3f2:	64 e0       	ldi	r22, 0x04	; 4
+ 3f4:	89 e3       	ldi	r24, 0x39	; 57
+ 3f6:	90 e0       	ldi	r25, 0x00	; 0
+ 3f8:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 3fc:	8f ec       	ldi	r24, 0xCF	; 207
+ 3fe:	97 e0       	ldi	r25, 0x07	; 7
+ 400:	01 97       	sbiw	r24, 0x01	; 1
+ 402:	f1 f7       	brne	.-4      	; 0x400 <__EEPROM_REGION_LENGTH__>
+ 404:	00 c0       	rjmp	.+0      	; 0x406 <__EEPROM_REGION_LENGTH__+0x6>
+ 406:	00 00       	nop
+ 408:	0e 94 d7 01 	call	0x3ae	; 0x3ae <HCAL_LCD_lcd_kick>
+ 40c:	08 95       	ret
+
+0000040e <HCAL_LCD_WRITE_CHAR>:
+ 40e:	68 2f       	mov	r22, r24
+ 410:	83 e3       	ldi	r24, 0x33	; 51
+ 412:	90 e0       	ldi	r25, 0x00	; 0
+ 414:	0e 94 7a 00 	call	0xf4	; 0xf4 <MCAL_GPIO_WritePort>
+ 418:	40 e0       	ldi	r20, 0x00	; 0
+ 41a:	68 e0       	ldi	r22, 0x08	; 8
+ 41c:	89 e3       	ldi	r24, 0x39	; 57
+ 41e:	90 e0       	ldi	r25, 0x00	; 0
+ 420:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 424:	41 e0       	ldi	r20, 0x01	; 1
+ 426:	64 e0       	ldi	r22, 0x04	; 4
+ 428:	89 e3       	ldi	r24, 0x39	; 57
+ 42a:	90 e0       	ldi	r25, 0x00	; 0
+ 42c:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 430:	8f ec       	ldi	r24, 0xCF	; 207
+ 432:	97 e0       	ldi	r25, 0x07	; 7
+ 434:	01 97       	sbiw	r24, 0x01	; 1
+ 436:	f1 f7       	brne	.-4      	; 0x434 <HCAL_LCD_WRITE_CHAR+0x26>
+ 438:	00 c0       	rjmp	.+0      	; 0x43a <HCAL_LCD_WRITE_CHAR+0x2c>
+ 43a:	00 00       	nop
+ 43c:	0e 94 d7 01 	call	0x3ae	; 0x3ae <HCAL_LCD_lcd_kick>
+ 440:	08 95       	ret
+
+00000442 <HCAL_LCD_clear_screen>:
+	_delay_ms(50);
+	MCAL_GPIO_WritePin(LCD_CTRL, EN_SWITCH, GPIO_PIN_SET);
+}
+void HCAL_LCD_clear_screen()
+{
+	HCAL_LCD_WRITE_COMMAND(LCD_CLEAR_SCREEN);
+ 442:	81 e0       	ldi	r24, 0x01	; 1
+ 444:	0e 94 ed 01 	call	0x3da	; 0x3da <HCAL_LCD_WRITE_COMMAND>
+ 448:	08 95       	ret
+
+0000044a <HCAL_LCD_INIT>:
+		PinCfg.GPIO_MODE = GPIO_MODE_INPUT_FLO;
+		MCAL_GPIO_Init(LCD_DATA, &PinCfg);
+}
+
+void HCAL_LCD_INIT()
+{
+ 44a:	1f 93       	push	r17
+ 44c:	cf 93       	push	r28
+ 44e:	df 93       	push	r29
+ 450:	00 d0       	rcall	.+0      	; 0x452 <HCAL_LCD_INIT+0x8>
+ 452:	cd b7       	in	r28, 0x3d	; 61
+ 454:	de b7       	in	r29, 0x3e	; 62
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 456:	8f e2       	ldi	r24, 0x2F	; 47
+ 458:	95 e7       	ldi	r25, 0x75	; 117
+ 45a:	01 97       	sbiw	r24, 0x01	; 1
+ 45c:	f1 f7       	brne	.-4      	; 0x45a <HCAL_LCD_INIT+0x10>
+ 45e:	00 c0       	rjmp	.+0      	; 0x460 <HCAL_LCD_INIT+0x16>
+ 460:	00 00       	nop
+	GPIO_PinConfig_t PinCfg;
+	
+	_delay_ms(15);
+	
+	PinCfg.GPIO_PinNumber = RS_SWITCH;
+ 462:	84 e0       	ldi	r24, 0x04	; 4
+ 464:	89 83       	std	Y+1, r24	; 0x01
+	PinCfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 466:	13 e0       	ldi	r17, 0x03	; 3
+ 468:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init(LCD_CTRL, &PinCfg);
+ 46a:	be 01       	movw	r22, r28
+ 46c:	6f 5f       	subi	r22, 0xFF	; 255
+ 46e:	7f 4f       	sbci	r23, 0xFF	; 255
+ 470:	89 e3       	ldi	r24, 0x39	; 57
+ 472:	90 e0       	ldi	r25, 0x00	; 0
+ 474:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+
+	PinCfg.GPIO_PinNumber = RW_SWITCH;
+ 478:	88 e0       	ldi	r24, 0x08	; 8
+ 47a:	89 83       	std	Y+1, r24	; 0x01
+	PinCfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 47c:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init(LCD_CTRL, &PinCfg);
+ 47e:	be 01       	movw	r22, r28
+ 480:	6f 5f       	subi	r22, 0xFF	; 255
+ 482:	7f 4f       	sbci	r23, 0xFF	; 255
+ 484:	89 e3       	ldi	r24, 0x39	; 57
+ 486:	90 e0       	ldi	r25, 0x00	; 0
+ 488:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+
+	PinCfg.GPIO_PinNumber = EN_SWITCH;
+ 48c:	80 e1       	ldi	r24, 0x10	; 16
+ 48e:	89 83       	std	Y+1, r24	; 0x01
+	PinCfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 490:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init(LCD_CTRL, &PinCfg);
+ 492:	be 01       	movw	r22, r28
+ 494:	6f 5f       	subi	r22, 0xFF	; 255
+ 496:	7f 4f       	sbci	r23, 0xFF	; 255
+ 498:	89 e3       	ldi	r24, 0x39	; 57
+ 49a:	90 e0       	ldi	r25, 0x00	; 0
+ 49c:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	
+	Make_Pins_Output();
+ 4a0:	0e 94 7a 01 	call	0x2f4	; 0x2f4 <Make_Pins_Output>
+
+	MCAL_GPIO_WritePin(LCD_CTRL, EN_SWITCH, GPIO_PIN_RESET);
+ 4a4:	40 e0       	ldi	r20, 0x00	; 0
+ 4a6:	60 e1       	ldi	r22, 0x10	; 16
+ 4a8:	89 e3       	ldi	r24, 0x39	; 57
+ 4aa:	90 e0       	ldi	r25, 0x00	; 0
+ 4ac:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+	MCAL_GPIO_WritePin(LCD_CTRL, RS_SWITCH, GPIO_PIN_RESET);
+ 4b0:	40 e0       	ldi	r20, 0x00	; 0
+ 4b2:	64 e0       	ldi	r22, 0x04	; 4
+ 4b4:	89 e3       	ldi	r24, 0x39	; 57
+ 4b6:	90 e0       	ldi	r25, 0x00	; 0
+ 4b8:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+	MCAL_GPIO_WritePin(LCD_CTRL, RW_SWITCH, GPIO_PIN_RESET);
+ 4bc:	40 e0       	ldi	r20, 0x00	; 0
+ 4be:	68 e0       	ldi	r22, 0x08	; 8
+ 4c0:	89 e3       	ldi	r24, 0x39	; 57
+ 4c2:	90 e0       	ldi	r25, 0x00	; 0
+ 4c4:	0e 94 6e 00 	call	0xdc	; 0xdc <MCAL_GPIO_WritePin>
+ 4c8:	8f e2       	ldi	r24, 0x2F	; 47
+ 4ca:	95 e7       	ldi	r25, 0x75	; 117
+ 4cc:	01 97       	sbiw	r24, 0x01	; 1
+ 4ce:	f1 f7       	brne	.-4      	; 0x4cc <HCAL_LCD_INIT+0x82>
+ 4d0:	00 c0       	rjmp	.+0      	; 0x4d2 <HCAL_LCD_INIT+0x88>
+ 4d2:	00 00       	nop
+	
+	_delay_ms(15);
+	
+	HCAL_LCD_clear_screen();
+ 4d4:	0e 94 21 02 	call	0x442	; 0x442 <HCAL_LCD_clear_screen>
+	HCAL_LCD_WRITE_COMMAND(LCD_FUNCTION_8BIT_2LINES);
+ 4d8:	88 e3       	ldi	r24, 0x38	; 56
+ 4da:	0e 94 ed 01 	call	0x3da	; 0x3da <HCAL_LCD_WRITE_COMMAND>
+	HCAL_LCD_WRITE_COMMAND(LCD_ENTRY_MODE);
+ 4de:	86 e0       	ldi	r24, 0x06	; 6
+ 4e0:	0e 94 ed 01 	call	0x3da	; 0x3da <HCAL_LCD_WRITE_COMMAND>
+	HCAL_LCD_WRITE_COMMAND(LCD_BEGIN_AT_FIRST_ROW);
+ 4e4:	80 e8       	ldi	r24, 0x80	; 128
+ 4e6:	0e 94 ed 01 	call	0x3da	; 0x3da <HCAL_LCD_WRITE_COMMAND>
+	HCAL_LCD_WRITE_COMMAND(LCD_DISP_ON_CURSOR_BLINK);
+ 4ea:	8f e0       	ldi	r24, 0x0F	; 15
+ 4ec:	0e 94 ed 01 	call	0x3da	; 0x3da <HCAL_LCD_WRITE_COMMAND>
+
+}
+ 4f0:	0f 90       	pop	r0
+ 4f2:	0f 90       	pop	r0
+ 4f4:	df 91       	pop	r29
+ 4f6:	cf 91       	pop	r28
+ 4f8:	1f 91       	pop	r17
+ 4fa:	08 95       	ret
+
+000004fc <gpio_init>:
+#include "Atmega32.h"
+#include "gpio.h"
+#include "keypad.h"
+#include "lcd.h"
+
+void gpio_init() {
+ 4fc:	cf 93       	push	r28
+ 4fe:	df 93       	push	r29
+ 500:	00 d0       	rcall	.+0      	; 0x502 <gpio_init+0x6>
+ 502:	cd b7       	in	r28, 0x3d	; 61
+ 504:	de b7       	in	r29, 0x3e	; 62
+	GPIO_PinConfig_t PinConfig;
+	PinConfig.GPIO_PinNumber = GPIO_PIN_0;
+ 506:	81 e0       	ldi	r24, 0x01	; 1
+ 508:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 50a:	83 e0       	ldi	r24, 0x03	; 3
+ 50c:	8a 83       	std	Y+2, r24	; 0x02
+	MCAL_GPIO_Init(GPIOA,&PinConfig);	
+ 50e:	be 01       	movw	r22, r28
+ 510:	6f 5f       	subi	r22, 0xFF	; 255
+ 512:	7f 4f       	sbci	r23, 0xFF	; 255
+ 514:	89 e3       	ldi	r24, 0x39	; 57
+ 516:	90 e0       	ldi	r25, 0x00	; 0
+ 518:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+	
+	PinConfig.GPIO_PinNumber = GPIO_PIN_1;
+ 51c:	82 e0       	ldi	r24, 0x02	; 2
+ 51e:	89 83       	std	Y+1, r24	; 0x01
+	PinConfig.GPIO_MODE = GPIO_MODE_INPUT_PU;
+ 520:	8a 83       	std	Y+2, r24	; 0x02
+	MCAL_GPIO_Init(GPIOA,&PinConfig);
+ 522:	be 01       	movw	r22, r28
+ 524:	6f 5f       	subi	r22, 0xFF	; 255
+ 526:	7f 4f       	sbci	r23, 0xFF	; 255
+ 528:	89 e3       	ldi	r24, 0x39	; 57
+ 52a:	90 e0       	ldi	r25, 0x00	; 0
+ 52c:	0e 94 41 00 	call	0x82	; 0x82 <MCAL_GPIO_Init>
+	
+}
+ 530:	0f 90       	pop	r0
+ 532:	0f 90       	pop	r0
+ 534:	df 91       	pop	r29
+ 536:	cf 91       	pop	r28
+ 538:	08 95       	ret
+
+0000053a <main>:
+
+int main(void)
+{
+	char key;
+	gpio_init();
+ 53a:	0e 94 7e 02 	call	0x4fc	; 0x4fc <gpio_init>
+	HCAL_Keypad_init();
+ 53e:	0e 94 82 00 	call	0x104	; 0x104 <HCAL_Keypad_init>
+	HCAL_LCD_INIT();	
+ 542:	0e 94 25 02 	call	0x44a	; 0x44a <HCAL_LCD_INIT>
+	/* Replace with your application code */
+    while (1) 
+    {
+		key = HCAL_Keypad_getkey();
+ 546:	0e 94 df 00 	call	0x1be	; 0x1be <HCAL_Keypad_getkey>
+		if (key != 'A')
+ 54a:	81 34       	cpi	r24, 0x41	; 65
+ 54c:	39 f0       	breq	.+14     	; 0x55c <main+0x22>
+		{
+			if (key == '?')
+ 54e:	8f 33       	cpi	r24, 0x3F	; 63
+ 550:	19 f4       	brne	.+6      	; 0x558 <main+0x1e>
+				HCAL_LCD_clear_screen();
+ 552:	0e 94 21 02 	call	0x442	; 0x442 <HCAL_LCD_clear_screen>
+ 556:	02 c0       	rjmp	.+4      	; 0x55c <main+0x22>
+			else
+				HCAL_LCD_WRITE_CHAR(key);
+ 558:	0e 94 07 02 	call	0x40e	; 0x40e <HCAL_LCD_WRITE_CHAR>
+		}
+		if(MCAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1) == GPIO_PIN_RESET)
+ 55c:	62 e0       	ldi	r22, 0x02	; 2
+ 55e:	89 e3       	ldi	r24, 0x39	; 57
+ 560:	90 e0       	ldi	r25, 0x00	; 0
+ 562:	0e 94 68 00 	call	0xd0	; 0xd0 <MCAL_GPIO_ReadPin>
+ 566:	81 11       	cpse	r24, r1
+ 568:	ee cf       	rjmp	.-36     	; 0x546 <main+0xc>
+		{
+			MCAL_GPIO_TogglePin(GPIOA,GPIO_PIN_0);
+ 56a:	61 e0       	ldi	r22, 0x01	; 1
+ 56c:	89 e3       	ldi	r24, 0x39	; 57
+ 56e:	90 e0       	ldi	r25, 0x00	; 0
+ 570:	0e 94 7d 00 	call	0xfa	; 0xfa <MCAL_GPIO_TogglePin>
+			while(MCAL_GPIO_ReadPin(GPIOA,GPIO_PIN_1) == 0);
+ 574:	62 e0       	ldi	r22, 0x02	; 2
+ 576:	89 e3       	ldi	r24, 0x39	; 57
+ 578:	90 e0       	ldi	r25, 0x00	; 0
+ 57a:	0e 94 68 00 	call	0xd0	; 0xd0 <MCAL_GPIO_ReadPin>
+ 57e:	88 23       	and	r24, r24
+ 580:	c9 f3       	breq	.-14     	; 0x574 <main+0x3a>
+ 582:	e1 cf       	rjmp	.-62     	; 0x546 <main+0xc>
+
+00000584 <_exit>:
+ 584:	f8 94       	cli
+
+00000586 <__stop_program>:
+ 586:	ff cf       	rjmp	.-2      	; 0x586 <__stop_program>

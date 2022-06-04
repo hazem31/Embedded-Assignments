@@ -1,0 +1,8 @@
+"Inc/EXTI.o"
+"Inc/Stm32_F103C6_gpio_driver.o"
+"Inc/keypad.o"
+"Inc/lcd.o"
+"Src/main.o"
+"Src/syscalls.o"
+"Src/sysmem.o"
+"Startup/startup_stm32f103c6tx.o"

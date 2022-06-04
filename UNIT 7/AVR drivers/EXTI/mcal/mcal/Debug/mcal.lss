@@ -1,0 +1,993 @@
+
+mcal.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000652  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000018  00800060  00000652  000006e6  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000008  00800078  00800078  000006fe  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000006fe  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000730  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000140  00000000  00000000  0000076c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000017d3  00000000  00000000  000008ac  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000a1c  00000000  00000000  0000207f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000ace  00000000  00000000  00002a9b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  0000037c  00000000  00000000  0000356c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000696  00000000  00000000  000038e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000992  00000000  00000000  00003f7e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000100  00000000  00000000  00004910  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 e1 00 	jmp	0x1c2	; 0x1c2 <__vector_1>
+   8:	0c 94 08 01 	jmp	0x210	; 0x210 <__vector_2>
+   c:	0c 94 2f 01 	jmp	0x25e	; 0x25e <__vector_3>
+  10:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  14:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  18:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  1c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  20:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  24:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  28:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  2c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  30:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  34:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  38:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  3c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  40:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  44:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  48:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  4c:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+  50:	0c 94 47 00 	jmp	0x8e	; 0x8e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e2 e5       	ldi	r30, 0x52	; 82
+  68:	f6 e0       	ldi	r31, 0x06	; 6
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a8 37       	cpi	r26, 0x78	; 120
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+
+00000076 <__do_clear_bss>:
+  76:	20 e0       	ldi	r18, 0x00	; 0
+  78:	a8 e7       	ldi	r26, 0x78	; 120
+  7a:	b0 e0       	ldi	r27, 0x00	; 0
+  7c:	01 c0       	rjmp	.+2      	; 0x80 <.do_clear_bss_start>
+
+0000007e <.do_clear_bss_loop>:
+  7e:	1d 92       	st	X+, r1
+
+00000080 <.do_clear_bss_start>:
+  80:	a0 38       	cpi	r26, 0x80	; 128
+  82:	b2 07       	cpc	r27, r18
+  84:	e1 f7       	brne	.-8      	; 0x7e <.do_clear_bss_loop>
+  86:	0e 94 e4 02 	call	0x5c8	; 0x5c8 <main>
+  8a:	0c 94 27 03 	jmp	0x64e	; 0x64e <_exit>
+
+0000008e <__bad_interrupt>:
+  8e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000092 <Update_EXTI>:
+	EXTI->MCUCSR_r &= ~(0x0F);
+}
+
+void MCAL_EXTI_GPIO_Update(EXTI_PinConfig_t * EXTI_Config)
+{
+	Update_EXTI(EXTI_Config);
+  92:	0f 93       	push	r16
+  94:	1f 93       	push	r17
+  96:	cf 93       	push	r28
+  98:	df 93       	push	r29
+  9a:	00 d0       	rcall	.+0      	; 0x9c <Update_EXTI+0xa>
+  9c:	00 d0       	rcall	.+0      	; 0x9e <Update_EXTI+0xc>
+  9e:	cd b7       	in	r28, 0x3d	; 61
+  a0:	de b7       	in	r29, 0x3e	; 62
+  a2:	8c 01       	movw	r16, r24
+  a4:	dc 01       	movw	r26, r24
+  a6:	13 96       	adiw	r26, 0x03	; 3
+  a8:	8c 91       	ld	r24, X
+  aa:	13 97       	sbiw	r26, 0x03	; 3
+  ac:	89 83       	std	Y+1, r24	; 0x01
+  ae:	81 e0       	ldi	r24, 0x01	; 1
+  b0:	8a 83       	std	Y+2, r24	; 0x02
+  b2:	be 01       	movw	r22, r28
+  b4:	6f 5f       	subi	r22, 0xFF	; 255
+  b6:	7f 4f       	sbci	r23, 0xFF	; 255
+  b8:	11 96       	adiw	r26, 0x01	; 1
+  ba:	8d 91       	ld	r24, X+
+  bc:	9c 91       	ld	r25, X
+  be:	12 97       	sbiw	r26, 0x02	; 2
+  c0:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+  c4:	f8 01       	movw	r30, r16
+  c6:	80 81       	ld	r24, Z
+  c8:	82 30       	cpi	r24, 0x02	; 2
+  ca:	18 f4       	brcc	.+6      	; 0xd2 <Update_EXTI+0x40>
+  cc:	e5 e5       	ldi	r30, 0x55	; 85
+  ce:	f0 e0       	ldi	r31, 0x00	; 0
+  d0:	02 c0       	rjmp	.+4      	; 0xd6 <Update_EXTI+0x44>
+  d2:	e4 e5       	ldi	r30, 0x54	; 84
+  d4:	f0 e0       	ldi	r31, 0x00	; 0
+  d6:	88 23       	and	r24, r24
+  d8:	21 f0       	breq	.+8      	; 0xe2 <Update_EXTI+0x50>
+  da:	81 30       	cpi	r24, 0x01	; 1
+  dc:	21 f4       	brne	.+8      	; 0xe6 <Update_EXTI+0x54>
+  de:	82 e0       	ldi	r24, 0x02	; 2
+  e0:	03 c0       	rjmp	.+6      	; 0xe8 <Update_EXTI+0x56>
+  e2:	80 e0       	ldi	r24, 0x00	; 0
+  e4:	01 c0       	rjmp	.+2      	; 0xe8 <Update_EXTI+0x56>
+  e6:	86 e0       	ldi	r24, 0x06	; 6
+  e8:	8b 83       	std	Y+3, r24	; 0x03
+  ea:	e5 35       	cpi	r30, 0x55	; 85
+  ec:	f1 05       	cpc	r31, r1
+  ee:	71 f4       	brne	.+28     	; 0x10c <Update_EXTI+0x7a>
+  f0:	2b 81       	ldd	r18, Y+3	; 0x03
+  f2:	83 e0       	ldi	r24, 0x03	; 3
+  f4:	90 e0       	ldi	r25, 0x00	; 0
+  f6:	02 c0       	rjmp	.+4      	; 0xfc <Update_EXTI+0x6a>
+  f8:	88 0f       	add	r24, r24
+  fa:	99 1f       	adc	r25, r25
+  fc:	2a 95       	dec	r18
+  fe:	e2 f7       	brpl	.-8      	; 0xf8 <Update_EXTI+0x66>
+ 100:	80 95       	com	r24
+ 102:	90 95       	com	r25
+ 104:	90 81       	ld	r25, Z
+ 106:	89 23       	and	r24, r25
+ 108:	80 83       	st	Z, r24
+ 10a:	0d c0       	rjmp	.+26     	; 0x126 <Update_EXTI+0x94>
+ 10c:	2b 81       	ldd	r18, Y+3	; 0x03
+ 10e:	81 e0       	ldi	r24, 0x01	; 1
+ 110:	90 e0       	ldi	r25, 0x00	; 0
+ 112:	02 c0       	rjmp	.+4      	; 0x118 <Update_EXTI+0x86>
+ 114:	88 0f       	add	r24, r24
+ 116:	99 1f       	adc	r25, r25
+ 118:	2a 95       	dec	r18
+ 11a:	e2 f7       	brpl	.-8      	; 0x114 <Update_EXTI+0x82>
+ 11c:	80 95       	com	r24
+ 11e:	90 95       	com	r25
+ 120:	90 81       	ld	r25, Z
+ 122:	89 23       	and	r24, r25
+ 124:	80 83       	st	Z, r24
+ 126:	d8 01       	movw	r26, r16
+ 128:	16 96       	adiw	r26, 0x06	; 6
+ 12a:	8c 91       	ld	r24, X
+ 12c:	16 97       	sbiw	r26, 0x06	; 6
+ 12e:	2b 81       	ldd	r18, Y+3	; 0x03
+ 130:	90 e0       	ldi	r25, 0x00	; 0
+ 132:	02 c0       	rjmp	.+4      	; 0x138 <Update_EXTI+0xa6>
+ 134:	88 0f       	add	r24, r24
+ 136:	99 1f       	adc	r25, r25
+ 138:	2a 95       	dec	r18
+ 13a:	e2 f7       	brpl	.-8      	; 0x134 <Update_EXTI+0xa2>
+ 13c:	90 81       	ld	r25, Z
+ 13e:	89 2b       	or	r24, r25
+ 140:	80 83       	st	Z, r24
+ 142:	ec 91       	ld	r30, X
+ 144:	f0 e0       	ldi	r31, 0x00	; 0
+ 146:	17 96       	adiw	r26, 0x07	; 7
+ 148:	8d 91       	ld	r24, X+
+ 14a:	9c 91       	ld	r25, X
+ 14c:	18 97       	sbiw	r26, 0x08	; 8
+ 14e:	ee 0f       	add	r30, r30
+ 150:	ff 1f       	adc	r31, r31
+ 152:	e6 58       	subi	r30, 0x86	; 134
+ 154:	ff 4f       	sbci	r31, 0xFF	; 255
+ 156:	91 83       	std	Z+1, r25	; 0x01
+ 158:	80 83       	st	Z, r24
+ 15a:	8c 91       	ld	r24, X
+ 15c:	88 23       	and	r24, r24
+ 15e:	21 f0       	breq	.+8      	; 0x168 <Update_EXTI+0xd6>
+ 160:	81 30       	cpi	r24, 0x01	; 1
+ 162:	21 f4       	brne	.+8      	; 0x16c <Update_EXTI+0xda>
+ 164:	87 e0       	ldi	r24, 0x07	; 7
+ 166:	03 c0       	rjmp	.+6      	; 0x16e <Update_EXTI+0xdc>
+ 168:	86 e0       	ldi	r24, 0x06	; 6
+ 16a:	01 c0       	rjmp	.+2      	; 0x16e <Update_EXTI+0xdc>
+ 16c:	85 e0       	ldi	r24, 0x05	; 5
+ 16e:	8c 83       	std	Y+4, r24	; 0x04
+ 170:	f8 01       	movw	r30, r16
+ 172:	81 85       	ldd	r24, Z+9	; 0x09
+ 174:	81 30       	cpi	r24, 0x01	; 1
+ 176:	61 f4       	brne	.+24     	; 0x190 <Update_EXTI+0xfe>
+ 178:	2c 81       	ldd	r18, Y+4	; 0x04
+ 17a:	81 e0       	ldi	r24, 0x01	; 1
+ 17c:	90 e0       	ldi	r25, 0x00	; 0
+ 17e:	02 c0       	rjmp	.+4      	; 0x184 <Update_EXTI+0xf2>
+ 180:	88 0f       	add	r24, r24
+ 182:	99 1f       	adc	r25, r25
+ 184:	2a 95       	dec	r18
+ 186:	e2 f7       	brpl	.-8      	; 0x180 <Update_EXTI+0xee>
+ 188:	9b b7       	in	r25, 0x3b	; 59
+ 18a:	89 2b       	or	r24, r25
+ 18c:	8b bf       	out	0x3b, r24	; 59
+ 18e:	0d c0       	rjmp	.+26     	; 0x1aa <Update_EXTI+0x118>
+ 190:	2c 81       	ldd	r18, Y+4	; 0x04
+ 192:	81 e0       	ldi	r24, 0x01	; 1
+ 194:	90 e0       	ldi	r25, 0x00	; 0
+ 196:	02 c0       	rjmp	.+4      	; 0x19c <Update_EXTI+0x10a>
+ 198:	88 0f       	add	r24, r24
+ 19a:	99 1f       	adc	r25, r25
+ 19c:	2a 95       	dec	r18
+ 19e:	e2 f7       	brpl	.-8      	; 0x198 <Update_EXTI+0x106>
+ 1a0:	80 95       	com	r24
+ 1a2:	90 95       	com	r25
+ 1a4:	9b b7       	in	r25, 0x3b	; 59
+ 1a6:	89 23       	and	r24, r25
+ 1a8:	8b bf       	out	0x3b, r24	; 59
+ 1aa:	0f 90       	pop	r0
+ 1ac:	0f 90       	pop	r0
+ 1ae:	0f 90       	pop	r0
+ 1b0:	0f 90       	pop	r0
+ 1b2:	df 91       	pop	r29
+ 1b4:	cf 91       	pop	r28
+ 1b6:	1f 91       	pop	r17
+ 1b8:	0f 91       	pop	r16
+ 1ba:	08 95       	ret
+
+000001bc <MCAL_EXTI_GPIO_Init>:
+ 1bc:	0e 94 49 00 	call	0x92	; 0x92 <Update_EXTI>
+ 1c0:	08 95       	ret
+
+000001c2 <__vector_1>:
+}
+
+ISR (INT0_vect)          //External interrupt_zero ISR
+{
+ 1c2:	1f 92       	push	r1
+ 1c4:	0f 92       	push	r0
+ 1c6:	0f b6       	in	r0, 0x3f	; 63
+ 1c8:	0f 92       	push	r0
+ 1ca:	11 24       	eor	r1, r1
+ 1cc:	2f 93       	push	r18
+ 1ce:	3f 93       	push	r19
+ 1d0:	4f 93       	push	r20
+ 1d2:	5f 93       	push	r21
+ 1d4:	6f 93       	push	r22
+ 1d6:	7f 93       	push	r23
+ 1d8:	8f 93       	push	r24
+ 1da:	9f 93       	push	r25
+ 1dc:	af 93       	push	r26
+ 1de:	bf 93       	push	r27
+ 1e0:	ef 93       	push	r30
+ 1e2:	ff 93       	push	r31
+	GP_IRQ_callBack[0]();
+ 1e4:	e0 91 7a 00 	lds	r30, 0x007A	; 0x80007a <GP_IRQ_callBack>
+ 1e8:	f0 91 7b 00 	lds	r31, 0x007B	; 0x80007b <GP_IRQ_callBack+0x1>
+ 1ec:	09 95       	icall
+	// EXTI->GIFR_r |= (1<<6) cleared by sw
+}
+ 1ee:	ff 91       	pop	r31
+ 1f0:	ef 91       	pop	r30
+ 1f2:	bf 91       	pop	r27
+ 1f4:	af 91       	pop	r26
+ 1f6:	9f 91       	pop	r25
+ 1f8:	8f 91       	pop	r24
+ 1fa:	7f 91       	pop	r23
+ 1fc:	6f 91       	pop	r22
+ 1fe:	5f 91       	pop	r21
+ 200:	4f 91       	pop	r20
+ 202:	3f 91       	pop	r19
+ 204:	2f 91       	pop	r18
+ 206:	0f 90       	pop	r0
+ 208:	0f be       	out	0x3f, r0	; 63
+ 20a:	0f 90       	pop	r0
+ 20c:	1f 90       	pop	r1
+ 20e:	18 95       	reti
+
+00000210 <__vector_2>:
+ISR (INT1_vect)        //External interrupt_one ISR
+{
+ 210:	1f 92       	push	r1
+ 212:	0f 92       	push	r0
+ 214:	0f b6       	in	r0, 0x3f	; 63
+ 216:	0f 92       	push	r0
+ 218:	11 24       	eor	r1, r1
+ 21a:	2f 93       	push	r18
+ 21c:	3f 93       	push	r19
+ 21e:	4f 93       	push	r20
+ 220:	5f 93       	push	r21
+ 222:	6f 93       	push	r22
+ 224:	7f 93       	push	r23
+ 226:	8f 93       	push	r24
+ 228:	9f 93       	push	r25
+ 22a:	af 93       	push	r26
+ 22c:	bf 93       	push	r27
+ 22e:	ef 93       	push	r30
+ 230:	ff 93       	push	r31
+	GP_IRQ_callBack[1]();
+ 232:	e0 91 7c 00 	lds	r30, 0x007C	; 0x80007c <GP_IRQ_callBack+0x2>
+ 236:	f0 91 7d 00 	lds	r31, 0x007D	; 0x80007d <GP_IRQ_callBack+0x3>
+ 23a:	09 95       	icall
+}
+ 23c:	ff 91       	pop	r31
+ 23e:	ef 91       	pop	r30
+ 240:	bf 91       	pop	r27
+ 242:	af 91       	pop	r26
+ 244:	9f 91       	pop	r25
+ 246:	8f 91       	pop	r24
+ 248:	7f 91       	pop	r23
+ 24a:	6f 91       	pop	r22
+ 24c:	5f 91       	pop	r21
+ 24e:	4f 91       	pop	r20
+ 250:	3f 91       	pop	r19
+ 252:	2f 91       	pop	r18
+ 254:	0f 90       	pop	r0
+ 256:	0f be       	out	0x3f, r0	; 63
+ 258:	0f 90       	pop	r0
+ 25a:	1f 90       	pop	r1
+ 25c:	18 95       	reti
+
+0000025e <__vector_3>:
+ISR (INT2_vect)        //External interrupt_one ISR
+{
+ 25e:	1f 92       	push	r1
+ 260:	0f 92       	push	r0
+ 262:	0f b6       	in	r0, 0x3f	; 63
+ 264:	0f 92       	push	r0
+ 266:	11 24       	eor	r1, r1
+ 268:	2f 93       	push	r18
+ 26a:	3f 93       	push	r19
+ 26c:	4f 93       	push	r20
+ 26e:	5f 93       	push	r21
+ 270:	6f 93       	push	r22
+ 272:	7f 93       	push	r23
+ 274:	8f 93       	push	r24
+ 276:	9f 93       	push	r25
+ 278:	af 93       	push	r26
+ 27a:	bf 93       	push	r27
+ 27c:	ef 93       	push	r30
+ 27e:	ff 93       	push	r31
+	GP_IRQ_callBack[2]();
+ 280:	e0 91 7e 00 	lds	r30, 0x007E	; 0x80007e <GP_IRQ_callBack+0x4>
+ 284:	f0 91 7f 00 	lds	r31, 0x007F	; 0x80007f <GP_IRQ_callBack+0x5>
+ 288:	09 95       	icall
+}
+ 28a:	ff 91       	pop	r31
+ 28c:	ef 91       	pop	r30
+ 28e:	bf 91       	pop	r27
+ 290:	af 91       	pop	r26
+ 292:	9f 91       	pop	r25
+ 294:	8f 91       	pop	r24
+ 296:	7f 91       	pop	r23
+ 298:	6f 91       	pop	r22
+ 29a:	5f 91       	pop	r21
+ 29c:	4f 91       	pop	r20
+ 29e:	3f 91       	pop	r19
+ 2a0:	2f 91       	pop	r18
+ 2a2:	0f 90       	pop	r0
+ 2a4:	0f be       	out	0x3f, r0	; 63
+ 2a6:	0f 90       	pop	r0
+ 2a8:	1f 90       	pop	r1
+ 2aa:	18 95       	reti
+
+000002ac <MCAL_GPIO_Init>:
+		return GPIO_PIN_RESET;
+}
+uint8_t MCAL_GPIO_ReadPort (GPIO_TypeDef *GPIOx)
+{
+	return GPIOx->PIN;
+}
+ 2ac:	fc 01       	movw	r30, r24
+ 2ae:	db 01       	movw	r26, r22
+ 2b0:	11 96       	adiw	r26, 0x01	; 1
+ 2b2:	9c 91       	ld	r25, X
+ 2b4:	11 97       	sbiw	r26, 0x01	; 1
+ 2b6:	91 30       	cpi	r25, 0x01	; 1
+ 2b8:	59 f4       	brne	.+22     	; 0x2d0 <MCAL_GPIO_Init+0x24>
+ 2ba:	91 81       	ldd	r25, Z+1	; 0x01
+ 2bc:	8c 91       	ld	r24, X
+ 2be:	80 95       	com	r24
+ 2c0:	89 23       	and	r24, r25
+ 2c2:	81 83       	std	Z+1, r24	; 0x01
+ 2c4:	92 81       	ldd	r25, Z+2	; 0x02
+ 2c6:	8c 91       	ld	r24, X
+ 2c8:	80 95       	com	r24
+ 2ca:	89 23       	and	r24, r25
+ 2cc:	82 83       	std	Z+2, r24	; 0x02
+ 2ce:	08 95       	ret
+ 2d0:	92 30       	cpi	r25, 0x02	; 2
+ 2d2:	59 f4       	brne	.+22     	; 0x2ea <MCAL_GPIO_Init+0x3e>
+ 2d4:	91 81       	ldd	r25, Z+1	; 0x01
+ 2d6:	db 01       	movw	r26, r22
+ 2d8:	8c 91       	ld	r24, X
+ 2da:	80 95       	com	r24
+ 2dc:	89 23       	and	r24, r25
+ 2de:	81 83       	std	Z+1, r24	; 0x01
+ 2e0:	92 81       	ldd	r25, Z+2	; 0x02
+ 2e2:	8c 91       	ld	r24, X
+ 2e4:	89 2b       	or	r24, r25
+ 2e6:	82 83       	std	Z+2, r24	; 0x02
+ 2e8:	08 95       	ret
+ 2ea:	93 30       	cpi	r25, 0x03	; 3
+ 2ec:	29 f4       	brne	.+10     	; 0x2f8 <MCAL_GPIO_Init+0x4c>
+ 2ee:	91 81       	ldd	r25, Z+1	; 0x01
+ 2f0:	db 01       	movw	r26, r22
+ 2f2:	8c 91       	ld	r24, X
+ 2f4:	89 2b       	or	r24, r25
+ 2f6:	81 83       	std	Z+1, r24	; 0x01
+ 2f8:	08 95       	ret
+
+000002fa <MCAL_GPIO_WritePin>:
+
+void MCAL_GPIO_WritePin (GPIO_TypeDef *GPIOx,uint8_t PinNumber , uint8_t Value)
+{
+ 2fa:	fc 01       	movw	r30, r24
+	if (Value == GPIO_PIN_SET)
+ 2fc:	41 30       	cpi	r20, 0x01	; 1
+ 2fe:	21 f4       	brne	.+8      	; 0x308 <MCAL_GPIO_WritePin+0xe>
+	{
+		GPIOx->PORT |= PinNumber;
+ 300:	82 81       	ldd	r24, Z+2	; 0x02
+ 302:	68 2b       	or	r22, r24
+ 304:	62 83       	std	Z+2, r22	; 0x02
+ 306:	08 95       	ret
+	}
+	else
+	{
+		GPIOx->PORT &= ~(PinNumber);
+ 308:	92 81       	ldd	r25, Z+2	; 0x02
+ 30a:	60 95       	com	r22
+ 30c:	69 23       	and	r22, r25
+ 30e:	62 83       	std	Z+2, r22	; 0x02
+ 310:	08 95       	ret
+
+00000312 <MCAL_GPIO_WritePort>:
+	}
+	
+}
+void MCAL_GPIO_WritePort (GPIO_TypeDef *GPIOx , uint8_t Value)
+{
+	GPIOx->PORT = Value;
+ 312:	fc 01       	movw	r30, r24
+ 314:	62 83       	std	Z+2, r22	; 0x02
+ 316:	08 95       	ret
+
+00000318 <Make_Pins_Output>:
+	
+	MCAL_GPIO_WritePin(LCD_CTRL, RW_SWITCH, GPIO_PIN_SET);
+	MCAL_GPIO_WritePin(LCD_CTRL, RS_SWITCH, GPIO_PIN_RESET);
+	HCAL_LCD_lcd_kick();
+	Make_Pins_Output();
+	MCAL_GPIO_TogglePin(GPIOA,GPIO_PIN_0);
+ 318:	1f 93       	push	r17
+ 31a:	cf 93       	push	r28
+ 31c:	df 93       	push	r29
+ 31e:	00 d0       	rcall	.+0      	; 0x320 <Make_Pins_Output+0x8>
+ 320:	cd b7       	in	r28, 0x3d	; 61
+ 322:	de b7       	in	r29, 0x3e	; 62
+ 324:	81 e0       	ldi	r24, 0x01	; 1
+ 326:	89 83       	std	Y+1, r24	; 0x01
+ 328:	13 e0       	ldi	r17, 0x03	; 3
+ 32a:	1a 83       	std	Y+2, r17	; 0x02
+ 32c:	be 01       	movw	r22, r28
+ 32e:	6f 5f       	subi	r22, 0xFF	; 255
+ 330:	7f 4f       	sbci	r23, 0xFF	; 255
+ 332:	83 e3       	ldi	r24, 0x33	; 51
+ 334:	90 e0       	ldi	r25, 0x00	; 0
+ 336:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 33a:	82 e0       	ldi	r24, 0x02	; 2
+ 33c:	89 83       	std	Y+1, r24	; 0x01
+ 33e:	1a 83       	std	Y+2, r17	; 0x02
+ 340:	be 01       	movw	r22, r28
+ 342:	6f 5f       	subi	r22, 0xFF	; 255
+ 344:	7f 4f       	sbci	r23, 0xFF	; 255
+ 346:	83 e3       	ldi	r24, 0x33	; 51
+ 348:	90 e0       	ldi	r25, 0x00	; 0
+ 34a:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 34e:	84 e0       	ldi	r24, 0x04	; 4
+ 350:	89 83       	std	Y+1, r24	; 0x01
+ 352:	1a 83       	std	Y+2, r17	; 0x02
+ 354:	be 01       	movw	r22, r28
+ 356:	6f 5f       	subi	r22, 0xFF	; 255
+ 358:	7f 4f       	sbci	r23, 0xFF	; 255
+ 35a:	83 e3       	ldi	r24, 0x33	; 51
+ 35c:	90 e0       	ldi	r25, 0x00	; 0
+ 35e:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 362:	88 e0       	ldi	r24, 0x08	; 8
+ 364:	89 83       	std	Y+1, r24	; 0x01
+ 366:	1a 83       	std	Y+2, r17	; 0x02
+ 368:	be 01       	movw	r22, r28
+ 36a:	6f 5f       	subi	r22, 0xFF	; 255
+ 36c:	7f 4f       	sbci	r23, 0xFF	; 255
+ 36e:	83 e3       	ldi	r24, 0x33	; 51
+ 370:	90 e0       	ldi	r25, 0x00	; 0
+ 372:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 376:	80 e1       	ldi	r24, 0x10	; 16
+ 378:	89 83       	std	Y+1, r24	; 0x01
+ 37a:	1a 83       	std	Y+2, r17	; 0x02
+ 37c:	be 01       	movw	r22, r28
+ 37e:	6f 5f       	subi	r22, 0xFF	; 255
+ 380:	7f 4f       	sbci	r23, 0xFF	; 255
+ 382:	83 e3       	ldi	r24, 0x33	; 51
+ 384:	90 e0       	ldi	r25, 0x00	; 0
+ 386:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 38a:	80 e2       	ldi	r24, 0x20	; 32
+ 38c:	89 83       	std	Y+1, r24	; 0x01
+ 38e:	1a 83       	std	Y+2, r17	; 0x02
+ 390:	be 01       	movw	r22, r28
+ 392:	6f 5f       	subi	r22, 0xFF	; 255
+ 394:	7f 4f       	sbci	r23, 0xFF	; 255
+ 396:	83 e3       	ldi	r24, 0x33	; 51
+ 398:	90 e0       	ldi	r25, 0x00	; 0
+ 39a:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 39e:	80 e4       	ldi	r24, 0x40	; 64
+ 3a0:	89 83       	std	Y+1, r24	; 0x01
+ 3a2:	1a 83       	std	Y+2, r17	; 0x02
+ 3a4:	be 01       	movw	r22, r28
+ 3a6:	6f 5f       	subi	r22, 0xFF	; 255
+ 3a8:	7f 4f       	sbci	r23, 0xFF	; 255
+ 3aa:	83 e3       	ldi	r24, 0x33	; 51
+ 3ac:	90 e0       	ldi	r25, 0x00	; 0
+ 3ae:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 3b2:	80 e8       	ldi	r24, 0x80	; 128
+ 3b4:	89 83       	std	Y+1, r24	; 0x01
+ 3b6:	1a 83       	std	Y+2, r17	; 0x02
+ 3b8:	be 01       	movw	r22, r28
+ 3ba:	6f 5f       	subi	r22, 0xFF	; 255
+ 3bc:	7f 4f       	sbci	r23, 0xFF	; 255
+ 3be:	83 e3       	ldi	r24, 0x33	; 51
+ 3c0:	90 e0       	ldi	r25, 0x00	; 0
+ 3c2:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+ 3c6:	0f 90       	pop	r0
+ 3c8:	0f 90       	pop	r0
+ 3ca:	df 91       	pop	r29
+ 3cc:	cf 91       	pop	r28
+ 3ce:	1f 91       	pop	r17
+ 3d0:	08 95       	ret
+
+000003d2 <HCAL_LCD_lcd_kick>:
+ 3d2:	40 e0       	ldi	r20, 0x00	; 0
+ 3d4:	60 e1       	ldi	r22, 0x10	; 16
+ 3d6:	89 e3       	ldi	r24, 0x39	; 57
+ 3d8:	90 e0       	ldi	r25, 0x00	; 0
+ 3da:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 3de:	2f e7       	ldi	r18, 0x7F	; 127
+ 3e0:	88 e3       	ldi	r24, 0x38	; 56
+ 3e2:	91 e0       	ldi	r25, 0x01	; 1
+ 3e4:	21 50       	subi	r18, 0x01	; 1
+ 3e6:	80 40       	sbci	r24, 0x00	; 0
+ 3e8:	90 40       	sbci	r25, 0x00	; 0
+ 3ea:	e1 f7       	brne	.-8      	; 0x3e4 <HCAL_LCD_lcd_kick+0x12>
+ 3ec:	00 c0       	rjmp	.+0      	; 0x3ee <HCAL_LCD_lcd_kick+0x1c>
+ 3ee:	00 00       	nop
+ 3f0:	41 e0       	ldi	r20, 0x01	; 1
+ 3f2:	60 e1       	ldi	r22, 0x10	; 16
+ 3f4:	89 e3       	ldi	r24, 0x39	; 57
+ 3f6:	90 e0       	ldi	r25, 0x00	; 0
+ 3f8:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 3fc:	08 95       	ret
+
+000003fe <HCAL_LCD_WRITE_COMMAND>:
+ 3fe:	68 2f       	mov	r22, r24
+ 400:	83 e3       	ldi	r24, 0x33	; 51
+ 402:	90 e0       	ldi	r25, 0x00	; 0
+ 404:	0e 94 89 01 	call	0x312	; 0x312 <MCAL_GPIO_WritePort>
+ 408:	40 e0       	ldi	r20, 0x00	; 0
+ 40a:	68 e0       	ldi	r22, 0x08	; 8
+ 40c:	89 e3       	ldi	r24, 0x39	; 57
+ 40e:	90 e0       	ldi	r25, 0x00	; 0
+ 410:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 414:	40 e0       	ldi	r20, 0x00	; 0
+ 416:	64 e0       	ldi	r22, 0x04	; 4
+ 418:	89 e3       	ldi	r24, 0x39	; 57
+ 41a:	90 e0       	ldi	r25, 0x00	; 0
+ 41c:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 420:	8f ec       	ldi	r24, 0xCF	; 207
+ 422:	97 e0       	ldi	r25, 0x07	; 7
+ 424:	01 97       	sbiw	r24, 0x01	; 1
+ 426:	f1 f7       	brne	.-4      	; 0x424 <__EEPROM_REGION_LENGTH__+0x24>
+ 428:	00 c0       	rjmp	.+0      	; 0x42a <__EEPROM_REGION_LENGTH__+0x2a>
+ 42a:	00 00       	nop
+ 42c:	0e 94 e9 01 	call	0x3d2	; 0x3d2 <HCAL_LCD_lcd_kick>
+ 430:	08 95       	ret
+
+00000432 <HCAL_LCD_WRITE_CHAR>:
+ 432:	68 2f       	mov	r22, r24
+ 434:	83 e3       	ldi	r24, 0x33	; 51
+ 436:	90 e0       	ldi	r25, 0x00	; 0
+ 438:	0e 94 89 01 	call	0x312	; 0x312 <MCAL_GPIO_WritePort>
+ 43c:	40 e0       	ldi	r20, 0x00	; 0
+ 43e:	68 e0       	ldi	r22, 0x08	; 8
+ 440:	89 e3       	ldi	r24, 0x39	; 57
+ 442:	90 e0       	ldi	r25, 0x00	; 0
+ 444:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 448:	41 e0       	ldi	r20, 0x01	; 1
+ 44a:	64 e0       	ldi	r22, 0x04	; 4
+ 44c:	89 e3       	ldi	r24, 0x39	; 57
+ 44e:	90 e0       	ldi	r25, 0x00	; 0
+ 450:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 454:	8f ec       	ldi	r24, 0xCF	; 207
+ 456:	97 e0       	ldi	r25, 0x07	; 7
+ 458:	01 97       	sbiw	r24, 0x01	; 1
+ 45a:	f1 f7       	brne	.-4      	; 0x458 <HCAL_LCD_WRITE_CHAR+0x26>
+ 45c:	00 c0       	rjmp	.+0      	; 0x45e <HCAL_LCD_WRITE_CHAR+0x2c>
+ 45e:	00 00       	nop
+ 460:	0e 94 e9 01 	call	0x3d2	; 0x3d2 <HCAL_LCD_lcd_kick>
+ 464:	08 95       	ret
+
+00000466 <HCAL_LCD_clear_screen>:
+	_delay_ms(50);
+	MCAL_GPIO_WritePin(LCD_CTRL, EN_SWITCH, GPIO_PIN_SET);
+}
+void HCAL_LCD_clear_screen()
+{
+	HCAL_LCD_WRITE_COMMAND(LCD_CLEAR_SCREEN);
+ 466:	81 e0       	ldi	r24, 0x01	; 1
+ 468:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+ 46c:	08 95       	ret
+
+0000046e <HCAL_LCD_INIT>:
+		PinCfg.GPIO_MODE = GPIO_MODE_INPUT_FLO;
+		MCAL_GPIO_Init(LCD_DATA, &PinCfg);
+}
+
+void HCAL_LCD_INIT()
+{
+ 46e:	1f 93       	push	r17
+ 470:	cf 93       	push	r28
+ 472:	df 93       	push	r29
+ 474:	00 d0       	rcall	.+0      	; 0x476 <HCAL_LCD_INIT+0x8>
+ 476:	cd b7       	in	r28, 0x3d	; 61
+ 478:	de b7       	in	r29, 0x3e	; 62
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 47a:	8f e2       	ldi	r24, 0x2F	; 47
+ 47c:	95 e7       	ldi	r25, 0x75	; 117
+ 47e:	01 97       	sbiw	r24, 0x01	; 1
+ 480:	f1 f7       	brne	.-4      	; 0x47e <HCAL_LCD_INIT+0x10>
+ 482:	00 c0       	rjmp	.+0      	; 0x484 <HCAL_LCD_INIT+0x16>
+ 484:	00 00       	nop
+	GPIO_PinConfig_t PinCfg;
+	
+	_delay_ms(15);
+	
+	PinCfg.GPIO_PinNumber = RS_SWITCH;
+ 486:	84 e0       	ldi	r24, 0x04	; 4
+ 488:	89 83       	std	Y+1, r24	; 0x01
+	PinCfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 48a:	13 e0       	ldi	r17, 0x03	; 3
+ 48c:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init(LCD_CTRL, &PinCfg);
+ 48e:	be 01       	movw	r22, r28
+ 490:	6f 5f       	subi	r22, 0xFF	; 255
+ 492:	7f 4f       	sbci	r23, 0xFF	; 255
+ 494:	89 e3       	ldi	r24, 0x39	; 57
+ 496:	90 e0       	ldi	r25, 0x00	; 0
+ 498:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+
+	PinCfg.GPIO_PinNumber = RW_SWITCH;
+ 49c:	88 e0       	ldi	r24, 0x08	; 8
+ 49e:	89 83       	std	Y+1, r24	; 0x01
+	PinCfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 4a0:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init(LCD_CTRL, &PinCfg);
+ 4a2:	be 01       	movw	r22, r28
+ 4a4:	6f 5f       	subi	r22, 0xFF	; 255
+ 4a6:	7f 4f       	sbci	r23, 0xFF	; 255
+ 4a8:	89 e3       	ldi	r24, 0x39	; 57
+ 4aa:	90 e0       	ldi	r25, 0x00	; 0
+ 4ac:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+
+	PinCfg.GPIO_PinNumber = EN_SWITCH;
+ 4b0:	80 e1       	ldi	r24, 0x10	; 16
+ 4b2:	89 83       	std	Y+1, r24	; 0x01
+	PinCfg.GPIO_MODE = GPIO_MODE_OUTPUT_PP;
+ 4b4:	1a 83       	std	Y+2, r17	; 0x02
+	MCAL_GPIO_Init(LCD_CTRL, &PinCfg);
+ 4b6:	be 01       	movw	r22, r28
+ 4b8:	6f 5f       	subi	r22, 0xFF	; 255
+ 4ba:	7f 4f       	sbci	r23, 0xFF	; 255
+ 4bc:	89 e3       	ldi	r24, 0x39	; 57
+ 4be:	90 e0       	ldi	r25, 0x00	; 0
+ 4c0:	0e 94 56 01 	call	0x2ac	; 0x2ac <MCAL_GPIO_Init>
+	
+	
+	Make_Pins_Output();
+ 4c4:	0e 94 8c 01 	call	0x318	; 0x318 <Make_Pins_Output>
+
+	MCAL_GPIO_WritePin(LCD_CTRL, EN_SWITCH, GPIO_PIN_RESET);
+ 4c8:	40 e0       	ldi	r20, 0x00	; 0
+ 4ca:	60 e1       	ldi	r22, 0x10	; 16
+ 4cc:	89 e3       	ldi	r24, 0x39	; 57
+ 4ce:	90 e0       	ldi	r25, 0x00	; 0
+ 4d0:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+	MCAL_GPIO_WritePin(LCD_CTRL, RS_SWITCH, GPIO_PIN_RESET);
+ 4d4:	40 e0       	ldi	r20, 0x00	; 0
+ 4d6:	64 e0       	ldi	r22, 0x04	; 4
+ 4d8:	89 e3       	ldi	r24, 0x39	; 57
+ 4da:	90 e0       	ldi	r25, 0x00	; 0
+ 4dc:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+	MCAL_GPIO_WritePin(LCD_CTRL, RW_SWITCH, GPIO_PIN_RESET);
+ 4e0:	40 e0       	ldi	r20, 0x00	; 0
+ 4e2:	68 e0       	ldi	r22, 0x08	; 8
+ 4e4:	89 e3       	ldi	r24, 0x39	; 57
+ 4e6:	90 e0       	ldi	r25, 0x00	; 0
+ 4e8:	0e 94 7d 01 	call	0x2fa	; 0x2fa <MCAL_GPIO_WritePin>
+ 4ec:	8f e2       	ldi	r24, 0x2F	; 47
+ 4ee:	95 e7       	ldi	r25, 0x75	; 117
+ 4f0:	01 97       	sbiw	r24, 0x01	; 1
+ 4f2:	f1 f7       	brne	.-4      	; 0x4f0 <HCAL_LCD_INIT+0x82>
+ 4f4:	00 c0       	rjmp	.+0      	; 0x4f6 <HCAL_LCD_INIT+0x88>
+ 4f6:	00 00       	nop
+	
+	_delay_ms(15);
+	
+	HCAL_LCD_clear_screen();
+ 4f8:	0e 94 33 02 	call	0x466	; 0x466 <HCAL_LCD_clear_screen>
+	HCAL_LCD_WRITE_COMMAND(LCD_FUNCTION_8BIT_2LINES);
+ 4fc:	88 e3       	ldi	r24, 0x38	; 56
+ 4fe:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+	HCAL_LCD_WRITE_COMMAND(LCD_ENTRY_MODE);
+ 502:	86 e0       	ldi	r24, 0x06	; 6
+ 504:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+	HCAL_LCD_WRITE_COMMAND(LCD_BEGIN_AT_FIRST_ROW);
+ 508:	80 e8       	ldi	r24, 0x80	; 128
+ 50a:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+	HCAL_LCD_WRITE_COMMAND(LCD_DISP_ON_CURSOR_BLINK);
+ 50e:	8f e0       	ldi	r24, 0x0F	; 15
+ 510:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+
+}
+ 514:	0f 90       	pop	r0
+ 516:	0f 90       	pop	r0
+ 518:	df 91       	pop	r29
+ 51a:	cf 91       	pop	r28
+ 51c:	1f 91       	pop	r17
+ 51e:	08 95       	ret
+
+00000520 <HCAL_LCD_GOTO_XY>:
+{
+	HCAL_LCD_WRITE_COMMAND(LCD_CLEAR_SCREEN);
+	
+}
+void HCAL_LCD_GOTO_XY(unsigned char line, unsigned char position)
+{
+ 520:	cf 93       	push	r28
+ 522:	df 93       	push	r29
+ 524:	c8 2f       	mov	r28, r24
+ 526:	d6 2f       	mov	r29, r22
+	if (line == 1) {
+ 528:	81 30       	cpi	r24, 0x01	; 1
+ 52a:	31 f4       	brne	.+12     	; 0x538 <HCAL_LCD_GOTO_XY+0x18>
+		if (position < 16 && position >= 0) {
+ 52c:	60 31       	cpi	r22, 0x10	; 16
+ 52e:	20 f4       	brcc	.+8      	; 0x538 <HCAL_LCD_GOTO_XY+0x18>
+			HCAL_LCD_WRITE_COMMAND(LCD_BEGIN_AT_FIRST_ROW + position);
+ 530:	80 e8       	ldi	r24, 0x80	; 128
+ 532:	86 0f       	add	r24, r22
+ 534:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+		}
+	}
+	if (line == 2) {
+ 538:	c2 30       	cpi	r28, 0x02	; 2
+ 53a:	31 f4       	brne	.+12     	; 0x548 <HCAL_LCD_GOTO_XY+0x28>
+		if (position < 16 && position >= 0) {
+ 53c:	d0 31       	cpi	r29, 0x10	; 16
+ 53e:	20 f4       	brcc	.+8      	; 0x548 <HCAL_LCD_GOTO_XY+0x28>
+			HCAL_LCD_WRITE_COMMAND(LCD_BEGIN_AT_SECOND_ROW + position);
+ 540:	80 ec       	ldi	r24, 0xC0	; 192
+ 542:	8d 0f       	add	r24, r29
+ 544:	0e 94 ff 01 	call	0x3fe	; 0x3fe <HCAL_LCD_WRITE_COMMAND>
+		}
+	}
+
+}
+ 548:	df 91       	pop	r29
+ 54a:	cf 91       	pop	r28
+ 54c:	08 95       	ret
+
+0000054e <HCAL_LCD_WRITE_STRING>:
+	HCAL_LCD_lcd_kick();
+	
+	
+}
+void HCAL_LCD_WRITE_STRING(char* string)
+{
+ 54e:	0f 93       	push	r16
+ 550:	1f 93       	push	r17
+ 552:	cf 93       	push	r28
+ 554:	df 93       	push	r29
+ 556:	8c 01       	movw	r16, r24
+	int count = 0;
+ 558:	c0 e0       	ldi	r28, 0x00	; 0
+ 55a:	d0 e0       	ldi	r29, 0x00	; 0
+	while (*string > 0) {
+ 55c:	18 c0       	rjmp	.+48     	; 0x58e <HCAL_LCD_WRITE_STRING+0x40>
+		count++;
+ 55e:	21 96       	adiw	r28, 0x01	; 1
+		HCAL_LCD_WRITE_CHAR(*string++);
+ 560:	0f 5f       	subi	r16, 0xFF	; 255
+ 562:	1f 4f       	sbci	r17, 0xFF	; 255
+ 564:	0e 94 19 02 	call	0x432	; 0x432 <HCAL_LCD_WRITE_CHAR>
+		if (count == 16) {
+ 568:	c0 31       	cpi	r28, 0x10	; 16
+ 56a:	d1 05       	cpc	r29, r1
+ 56c:	29 f4       	brne	.+10     	; 0x578 <HCAL_LCD_WRITE_STRING+0x2a>
+			HCAL_LCD_GOTO_XY(2, 0);
+ 56e:	60 e0       	ldi	r22, 0x00	; 0
+ 570:	82 e0       	ldi	r24, 0x02	; 2
+ 572:	0e 94 90 02 	call	0x520	; 0x520 <HCAL_LCD_GOTO_XY>
+ 576:	0b c0       	rjmp	.+22     	; 0x58e <HCAL_LCD_WRITE_STRING+0x40>
+			} else if (count == 32) {
+ 578:	c0 32       	cpi	r28, 0x20	; 32
+ 57a:	d1 05       	cpc	r29, r1
+ 57c:	41 f4       	brne	.+16     	; 0x58e <HCAL_LCD_WRITE_STRING+0x40>
+			HCAL_LCD_clear_screen();
+ 57e:	0e 94 33 02 	call	0x466	; 0x466 <HCAL_LCD_clear_screen>
+			HCAL_LCD_GOTO_XY(1, 0);
+ 582:	60 e0       	ldi	r22, 0x00	; 0
+ 584:	81 e0       	ldi	r24, 0x01	; 1
+ 586:	0e 94 90 02 	call	0x520	; 0x520 <HCAL_LCD_GOTO_XY>
+			count = 0;
+ 58a:	c0 e0       	ldi	r28, 0x00	; 0
+ 58c:	d0 e0       	ldi	r29, 0x00	; 0
+	
+}
+void HCAL_LCD_WRITE_STRING(char* string)
+{
+	int count = 0;
+	while (*string > 0) {
+ 58e:	f8 01       	movw	r30, r16
+ 590:	80 81       	ld	r24, Z
+ 592:	81 11       	cpse	r24, r1
+ 594:	e4 cf       	rjmp	.-56     	; 0x55e <HCAL_LCD_WRITE_STRING+0x10>
+			count = 0;
+		}
+	}
+	
+	
+}
+ 596:	df 91       	pop	r29
+ 598:	cf 91       	pop	r28
+ 59a:	1f 91       	pop	r17
+ 59c:	0f 91       	pop	r16
+ 59e:	08 95       	ret
+
+000005a0 <Interupt_INT0>:
+unsigned int IRQ_FLAG = 0;
+
+
+void Interupt_INT0(void)
+{
+	IRQ_FLAG = 1;
+ 5a0:	81 e0       	ldi	r24, 0x01	; 1
+ 5a2:	90 e0       	ldi	r25, 0x00	; 0
+ 5a4:	90 93 79 00 	sts	0x0079, r25	; 0x800079 <__data_end+0x1>
+ 5a8:	80 93 78 00 	sts	0x0078, r24	; 0x800078 <__data_end>
+	HCAL_LCD_WRITE_STRING("INT0 is working");
+ 5ac:	87 e6       	ldi	r24, 0x67	; 103
+ 5ae:	90 e0       	ldi	r25, 0x00	; 0
+ 5b0:	0e 94 a7 02 	call	0x54e	; 0x54e <HCAL_LCD_WRITE_STRING>
+ 5b4:	2f ef       	ldi	r18, 0xFF	; 255
+ 5b6:	81 e1       	ldi	r24, 0x11	; 17
+ 5b8:	9a e7       	ldi	r25, 0x7A	; 122
+ 5ba:	21 50       	subi	r18, 0x01	; 1
+ 5bc:	80 40       	sbci	r24, 0x00	; 0
+ 5be:	90 40       	sbci	r25, 0x00	; 0
+ 5c0:	e1 f7       	brne	.-8      	; 0x5ba <Interupt_INT0+0x1a>
+ 5c2:	00 c0       	rjmp	.+0      	; 0x5c4 <Interupt_INT0+0x24>
+ 5c4:	00 00       	nop
+ 5c6:	08 95       	ret
+
+000005c8 <main>:
+		HCAL_LCD_WRITE_STRING("INT0 is working");
+		_delay_ms(5000);	
+}
+*/
+int main(void)
+{
+ 5c8:	cf 93       	push	r28
+ 5ca:	df 93       	push	r29
+ 5cc:	cd b7       	in	r28, 0x3d	; 61
+ 5ce:	de b7       	in	r29, 0x3e	; 62
+ 5d0:	2a 97       	sbiw	r28, 0x0a	; 10
+ 5d2:	0f b6       	in	r0, 0x3f	; 63
+ 5d4:	f8 94       	cli
+ 5d6:	de bf       	out	0x3e, r29	; 62
+ 5d8:	0f be       	out	0x3f, r0	; 63
+ 5da:	cd bf       	out	0x3d, r28	; 61
+	EXTI_PinConfig_t EX;
+	EX.EXTI_PIN = INT0_Falling;
+ 5dc:	87 e0       	ldi	r24, 0x07	; 7
+ 5de:	e0 e6       	ldi	r30, 0x60	; 96
+ 5e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 5e2:	de 01       	movw	r26, r28
+ 5e4:	11 96       	adiw	r26, 0x01	; 1
+ 5e6:	01 90       	ld	r0, Z+
+ 5e8:	0d 92       	st	X+, r0
+ 5ea:	8a 95       	dec	r24
+ 5ec:	e1 f7       	brne	.-8      	; 0x5e6 <main+0x1e>
+	EX.IRQ_EN = EXTI_IRQ_Enable;
+ 5ee:	81 e0       	ldi	r24, 0x01	; 1
+ 5f0:	8a 87       	std	Y+10, r24	; 0x0a
+	EX.P_IRQ_callBack = Interupt_INT0; 
+ 5f2:	80 ed       	ldi	r24, 0xD0	; 208
+ 5f4:	92 e0       	ldi	r25, 0x02	; 2
+ 5f6:	99 87       	std	Y+9, r25	; 0x09
+ 5f8:	88 87       	std	Y+8, r24	; 0x08
+	MCAL_EXTI_GPIO_Init(&EX);
+ 5fa:	ce 01       	movw	r24, r28
+ 5fc:	01 96       	adiw	r24, 0x01	; 1
+ 5fe:	0e 94 de 00 	call	0x1bc	; 0x1bc <MCAL_EXTI_GPIO_Init>
+	Interupt_Enable();
+ 602:	8f b7       	in	r24, 0x3f	; 63
+ 604:	80 68       	ori	r24, 0x80	; 128
+ 606:	8f bf       	out	0x3f, r24	; 63
+	//MCUCR |= (1<<1);
+	//GICR |= (1<<6);
+	
+	//SREG |= (1<<7);
+	
+	HCAL_LCD_INIT();
+ 608:	0e 94 37 02 	call	0x46e	; 0x46e <HCAL_LCD_INIT>
+	HCAL_LCD_WRITE_CHAR('A');
+ 60c:	81 e4       	ldi	r24, 0x41	; 65
+ 60e:	0e 94 19 02 	call	0x432	; 0x432 <HCAL_LCD_WRITE_CHAR>
+ 612:	2f ef       	ldi	r18, 0xFF	; 255
+ 614:	89 e6       	ldi	r24, 0x69	; 105
+ 616:	98 e1       	ldi	r25, 0x18	; 24
+ 618:	21 50       	subi	r18, 0x01	; 1
+ 61a:	80 40       	sbci	r24, 0x00	; 0
+ 61c:	90 40       	sbci	r25, 0x00	; 0
+ 61e:	e1 f7       	brne	.-8      	; 0x618 <main+0x50>
+ 620:	00 c0       	rjmp	.+0      	; 0x622 <main+0x5a>
+ 622:	00 00       	nop
+	_delay_ms(1000);	
+	HCAL_LCD_clear_screen();
+ 624:	0e 94 33 02 	call	0x466	; 0x466 <HCAL_LCD_clear_screen>
+	IRQ_FLAG = 1;
+ 628:	81 e0       	ldi	r24, 0x01	; 1
+ 62a:	90 e0       	ldi	r25, 0x00	; 0
+ 62c:	90 93 79 00 	sts	0x0079, r25	; 0x800079 <__data_end+0x1>
+ 630:	80 93 78 00 	sts	0x0078, r24	; 0x800078 <__data_end>
+	while (1) 
+    {
+		if (IRQ_FLAG == 1)
+ 634:	80 91 78 00 	lds	r24, 0x0078	; 0x800078 <__data_end>
+ 638:	90 91 79 00 	lds	r25, 0x0079	; 0x800079 <__data_end+0x1>
+ 63c:	01 97       	sbiw	r24, 0x01	; 1
+ 63e:	d1 f7       	brne	.-12     	; 0x634 <main+0x6c>
+		{
+				HCAL_LCD_clear_screen();
+ 640:	0e 94 33 02 	call	0x466	; 0x466 <HCAL_LCD_clear_screen>
+				IRQ_FLAG = 0;
+ 644:	10 92 79 00 	sts	0x0079, r1	; 0x800079 <__data_end+0x1>
+ 648:	10 92 78 00 	sts	0x0078, r1	; 0x800078 <__data_end>
+ 64c:	f3 cf       	rjmp	.-26     	; 0x634 <main+0x6c>
+
+0000064e <_exit>:
+ 64e:	f8 94       	cli
+
+00000650 <__stop_program>:
+ 650:	ff cf       	rjmp	.-2      	; 0x650 <__stop_program>
